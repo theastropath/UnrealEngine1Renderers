@@ -1,6 +1,6 @@
 # Unreal Engine 1 Renderers
 
-# [DOWNLOAD HERE](https://github.com/theastropath/DeusExeModern/releases)
+# [DOWNLOAD HERE](https://github.com/theastropath/UnrealEngine1Renderers/releases)
 
 Newly updated renderers for various Unreal Engine 1 games.
 
