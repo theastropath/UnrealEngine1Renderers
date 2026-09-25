@@ -5,7 +5,11 @@ Newly updated renderers for various Unreal Engine 1 games.
  - DirectX 10
  - OpenGL 1.x
 
-Based on prior work by (Kentie and Dohnal?)
+DirectX 9 and OpenGL based on [prior work by Chris W. Dohnal](https://www.cwdohnal.com/utglr/)
+
+DirectX 10 based on [prior work by Marjin Kentie](https://kentie.net/article/d3d10drv/index.htm)
+
+---
 
 These renderers are built for the following games:
  - Deus Ex
