@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Untracked per-machine game locations; see local.props.example. -->
+  <Import Project="$(MSBuildThisFileDirectory)local.props" Condition="Exists('$(MSBuildThisFileDirectory)local.props')" />
+  <PropertyGroup Label="UserMacros">
+    <GAMENAME>Nerf</GAMENAME>
+    <GAMEDIR>$(GAMEDIR_NERF)</GAMEDIR>
+    <!--
+      Left empty deliberately: the SDK under Games\Nerf ships no game executable and names none, so
+      there is nothing here to derive it from. Nothing reads GAMEEXE - only GAMENAME and GAMEDIR are
+      consumed, by Render DLL.props - so an empty value costs nothing, while a wrong one would be
+      copied into deploy.ps1's safety check and make it refuse a correct install. Fill it in once
+      confirmed against a real installation.
+    -->
+    <GAMEEXE></GAMEEXE>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <!--
+        Engine 300, whose render interface is Unreal Gold 226's: Flush takes no argument, Exec is
+        pure virtual so nothing may chain to it, DECLARE_CLASS takes the three-argument form and
+        there is no URenderDevice::DetailTextures. NERF therefore sets the OLD_URENDERDEVICE
+        umbrella in d3d10drv.h, which is what those branches test.
+
+        It gets a define of its own instead of reusing UNREALGOLD, because the two SDKs are not
+        interchangeable: Nerf's URenderDevice carries Description and DescFlags, which Gold's does
+        not, and those shift the offset of every field after them. That difference is also the one
+        place the two part company in code - see the Description assignment in Init().
+      -->
+      <PreprocessorDefinitions>NERF;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="GAMENAME">
+      <Value>$(GAMENAME)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEDIR">
+      <Value>$(GAMEDIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEEXE">
+      <Value>$(GAMEEXE)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

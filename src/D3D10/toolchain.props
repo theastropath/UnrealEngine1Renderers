@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Toolchain compatibility sheet. The project was authored for Visual Studio
+    2010 and the June 2010 DirectX SDK; this retargets it to the installed
+    toolset and locates the legacy SDK, which is still needed for d3dx10.
+
+    Must be imported *before* Microsoft.Cpp.props for PlatformToolset to take
+    effect.
+  -->
+  <PropertyGroup Label="Toolset">
+    <!-- v100 is the value baked into the original project; treat it as "unset". -->
+    <PlatformToolset Condition="'$(PlatformToolset)'=='' or '$(PlatformToolset)'=='v100'">$(DefaultPlatformToolset)</PlatformToolset>
+  </PropertyGroup>
+
+  <!--
+    DirectX SDK (June 2010) discovery. Set DXSDK_DIR (or /p:DXSDK_DIR=...) to
+    pick a copy; otherwise the well-known locations are probed.
+
+    The normalised result is published as DirectXSdkDir, not written back to
+    DXSDK_DIR, which may arrive as a global property and so cannot be
+    reassigned. d3d10drv.vcxproj appends it after the Windows SDK, so only
+    d3dx10 comes from the legacy SDK.
+  -->
+  <PropertyGroup Label="DirectXSdk">
+    <DirectXSdkDir Condition="'$(DXSDK_DIR)'!=''">$(DXSDK_DIR.TrimEnd('\'))\</DirectXSdkDir>
+    <DirectXSdkDir Condition="!Exists('$(DirectXSdkDir)Include\d3dx10.h')">$([System.Environment]::GetEnvironmentVariable('ProgramFiles(x86)'))\Microsoft DirectX SDK (June 2010)\</DirectXSdkDir>
+    <DirectXSdkDir Condition="!Exists('$(DirectXSdkDir)Include\d3dx10.h')">$(ProgramFiles)\Microsoft DirectX SDK (June 2010)\</DirectXSdkDir>
+    <!--
+      A copy unpacked next to this repository, e.g. C:\Projects\dxsdk-jun2010.
+      The grandparent is probed as well, so one unpacked SDK still serves this
+      project when it sits alongside the other renderers in a shared folder.
+    -->
+    <DirectXSdkDir Condition="!Exists('$(DirectXSdkDir)Include\d3dx10.h')">$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\dxsdk-jun2010'))\</DirectXSdkDir>
+    <DirectXSdkDir Condition="!Exists('$(DirectXSdkDir)Include\d3dx10.h')">$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\dxsdk-jun2010'))\</DirectXSdkDir>
+    <DirectXSdkDir Condition="!Exists('$(DirectXSdkDir)Include\d3dx10.h')"></DirectXSdkDir>
+  </PropertyGroup>
+
+  <Target Name="VerifyDirectXSdk" BeforeTargets="ClCompile" Condition="'$(DirectXSdkDir)'==''">
+    <Error Text="The DirectX SDK (June 2010) could not be found. Install it, or set the DXSDK_DIR environment variable to the folder that contains its Include and Lib subdirectories (d3dx10.h and d3dx10.lib are required)." />
+  </Target>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <!-- The engine headers force /Zp4, which the Windows SDK rejects without this. -->
+      <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <!--
+        Pinned, not left to the toolset default. This code reasons about unwinding in two places
+        and in opposite directions: d3d.cpp catches std::bad_alloc around shader construction,
+        while deferred.cpp requires that a worker job contain nothing that can unwind. Whether
+        either is meaningful should not depend on which compiler happens to be installed.
+        /EHsc - C++ exceptions, extern "C" assumed not to throw.
+      -->
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <!--
+        ..\Shared holds the job system and frame arena, shared with the D3D9 and OpenGL
+        renderers. Added here and not to IncludePath: the project sets that once per
+        configuration, so it would need the same edit ten times.
+      -->
+      <AdditionalIncludeDirectories>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\Shared'));%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+</Project>

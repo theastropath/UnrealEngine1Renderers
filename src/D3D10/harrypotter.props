@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Untracked per-machine game locations; see local.props.example. -->
+  <Import Project="$(MSBuildThisFileDirectory)local.props" Condition="Exists('$(MSBuildThisFileDirectory)local.props')" />
+  <PropertyGroup Label="UserMacros">
+    <GAMENAME>HarryPotter</GAMENAME>
+    <GAMEDIR>$(GAMEDIR_HARRYPOTTER)</GAMEDIR>
+    <!--
+      Left empty deliberately. The SDK tree ships an HP.ico and a Launch project but names no built
+      executable, and the retail name has not been checked against an installation - so there is no
+      expectation to record. deploy.ps1 skips its destination check for a game with no entry, which
+      is the safe way to be wrong: a wrong name would refuse a correct install.
+    -->
+    <GAMEEXE></GAMEEXE>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <!--
+        Engine 433. Unreal Tournament generation in every respect that usually matters - appSeconds
+        returns FTime, GUglyHackFlags and DetailTextures are both present, DECLARE_ABSTRACT_CLASS
+        takes the four-argument form, UTexture::Lock takes the FTime overload, and FSceneNode,
+        FTextureInfo, FSurfaceInfo, FSurfaceFacet and FTransTexture are identical to UT's.
+
+        What it does not share with UT is the submission interface: KnowWonder replaced the polygon
+        fan entry point with indexed triangles, adding the MaxVertices and DrawTriangles pure
+        virtuals and demoting DrawGouraudPolygon to a non-pure default body. Their own drivers in
+        the SDK implement DrawTriangles and no gouraud entry point at all, so it carries every
+        actor. That is what earns this game a define of its own, where XComEnforcer simply reuses
+        UNREALTOURNAMENT; the UT-generation sites widen to include it instead.
+
+        Note that this SDK does not compile clean under a conforming compiler. UnAudio.h declares a
+        member with no return type, suppressed below, and two headers reuse a for initialiser
+        variable after its loop, which is patched in the tree itself - /Zc:forScope- would have
+        restored the old behaviour but makes this toolchain fault with an internal compiler error.
+      -->
+      <PreprocessorDefinitions>HARRYPOTTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4430;4183;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="GAMENAME">
+      <Value>$(GAMENAME)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEDIR">
+      <Value>$(GAMEDIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEEXE">
+      <Value>$(GAMEEXE)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

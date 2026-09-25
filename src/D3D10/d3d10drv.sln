@@ -1,0 +1,74 @@
+
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "d3d10drv", "Src\d3d10drv.vcxproj", "{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Deus Ex Debug|Win32 = Deus Ex Debug|Win32
+		Deus Ex Release|Win32 = Deus Ex Release|Win32
+		Harry Potter Debug|Win32 = Harry Potter Debug|Win32
+		Harry Potter Release|Win32 = Harry Potter Release|Win32
+		Nerf Arena Blast Debug|Win32 = Nerf Arena Blast Debug|Win32
+		Klingon Debug|Win32 = Klingon Debug|Win32
+		Nerf Arena Blast Release|Win32 = Nerf Arena Blast Release|Win32
+		Klingon Release|Win32 = Klingon Release|Win32
+		Rune 1.00 Debug|Win32 = Rune 1.00 Debug|Win32
+		Rune 1.00 Release|Win32 = Rune 1.00 Release|Win32
+		Rune Debug|Win32 = Rune Debug|Win32
+		Rune Release|Win32 = Rune Release|Win32
+		Unreal 224 Debug|Win32 = Unreal 224 Debug|Win32
+		Unreal 224 Release|Win32 = Unreal 224 Release|Win32
+		Unreal Gold Debug|Win32 = Unreal Gold Debug|Win32
+		Unreal Gold Release|Win32 = Unreal Gold Release|Win32
+		Unreal Tournament Debug|Win32 = Unreal Tournament Debug|Win32
+		Unreal Tournament Release|Win32 = Unreal Tournament Release|Win32
+		X-COM Enforcer Debug|Win32 = X-COM Enforcer Debug|Win32
+		X-COM Enforcer Release|Win32 = X-COM Enforcer Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Deus Ex Debug|Win32.ActiveCfg = Deus Ex Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Deus Ex Debug|Win32.Build.0 = Deus Ex Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Deus Ex Release|Win32.ActiveCfg = Deus Ex Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Deus Ex Release|Win32.Build.0 = Deus Ex Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Harry Potter Debug|Win32.ActiveCfg = Harry Potter Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Harry Potter Debug|Win32.Build.0 = Harry Potter Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Harry Potter Release|Win32.ActiveCfg = Harry Potter Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Harry Potter Release|Win32.Build.0 = Harry Potter Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Nerf Arena Blast Debug|Win32.ActiveCfg = Nerf Arena Blast Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Klingon Debug|Win32.ActiveCfg = Klingon Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Nerf Arena Blast Debug|Win32.Build.0 = Nerf Arena Blast Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Klingon Debug|Win32.Build.0 = Klingon Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Nerf Arena Blast Release|Win32.ActiveCfg = Nerf Arena Blast Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Klingon Release|Win32.ActiveCfg = Klingon Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Nerf Arena Blast Release|Win32.Build.0 = Nerf Arena Blast Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Klingon Release|Win32.Build.0 = Klingon Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Rune 1.00 Debug|Win32.ActiveCfg = Rune 1.00 Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Rune 1.00 Debug|Win32.Build.0 = Rune 1.00 Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Rune 1.00 Release|Win32.ActiveCfg = Rune 1.00 Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Rune 1.00 Release|Win32.Build.0 = Rune 1.00 Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Rune Debug|Win32.ActiveCfg = Rune Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Rune Debug|Win32.Build.0 = Rune Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Rune Release|Win32.ActiveCfg = Rune Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Rune Release|Win32.Build.0 = Rune Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal 224 Debug|Win32.ActiveCfg = Unreal 224 Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal 224 Debug|Win32.Build.0 = Unreal 224 Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal 224 Release|Win32.ActiveCfg = Unreal 224 Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal 224 Release|Win32.Build.0 = Unreal 224 Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal Gold Debug|Win32.ActiveCfg = Unreal Gold Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal Gold Debug|Win32.Build.0 = Unreal Gold Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal Gold Release|Win32.ActiveCfg = Unreal Gold Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal Gold Release|Win32.Build.0 = Unreal Gold Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal Tournament Debug|Win32.ActiveCfg = Unreal Tournament Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal Tournament Debug|Win32.Build.0 = Unreal Tournament Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal Tournament Release|Win32.ActiveCfg = Unreal Tournament Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.Unreal Tournament Release|Win32.Build.0 = Unreal Tournament Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.X-COM Enforcer Debug|Win32.ActiveCfg = X-COM Enforcer Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.X-COM Enforcer Debug|Win32.Build.0 = X-COM Enforcer Debug|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.X-COM Enforcer Release|Win32.ActiveCfg = X-COM Enforcer Release|Win32
+		{8EFD8EED-00B7-49BA-A8B1-E74D6255796A}.X-COM Enforcer Release|Win32.Build.0 = X-COM Enforcer Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

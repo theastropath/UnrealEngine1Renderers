@@ -1,0 +1,9 @@
+[Public]
+Object=(Name=OpenGL1xDrv.OpenGLRenderDevice,Class=Class,MetaClass=Engine.RenderDevice,Autodetect=OpenGL32.dll)
+Preferences=(Caption="Rendering",Parent="Advanced Options")
+Preferences=(Caption="OpenGL 1.x support",Parent="Rendering",Class=OpenGL1xDrv.OpenGLRenderDevice,Immediate=True)
+
+[OpenGLRenderDevice]
+ClassCaption="OpenGL 1.x Support"
+AskInstalled=Do you have OpenGL installed?
+AskUse=Do you want to use OpenGL?

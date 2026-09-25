@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <!--
+      Anchor all outputs to the repository root (the folder holding this sheet)
+      and not $(SolutionDir): the C++ targets silently default that to the
+      project folder when a .vcxproj is built without its solution.
+    -->
+    <D3D10RootDir>$(MSBuildThisFileDirectory)</D3D10RootDir>
+    <OutDir>$(D3D10RootDir)_work\bin\$(Configuration)\</OutDir>
+    <IntDir>$(D3D10RootDir)_work\intermediate\$(Configuration)\$(ProjectName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>../games/$(GAMENAME)/engine/inc;../games/$(GAMENAME)/core/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_REALLY_WANT_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>../games/$(GAMENAME)/engine/lib/engine.lib;../games/$(GAMENAME)/core/lib/core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>rem --- Stage the renderer package under &lt;repo root&gt;\packages\&lt;game&gt; ---
+rem
+rem     Every copy is followed by "|| exit /b 1". A batch post-build event reports the exit code of its
+rem     last command, so without this a failure in any earlier copy - most plausibly a .fx locked
+rem     because the game is running - would leave an incomplete package and report success.
+rem
+rem     The effects live in Shaders, a sibling of Src, because they ship as editable text
+rem     and are not compiled into the DLL; nothing under Src is redistributed. They are
+rem     copied into one directory named after the project, because that is the layout the
+rem     runtime loads them from: the shader classes name their files as
+rem     "d3d10drv\&lt;name&gt;.fx", relative to the game's System folder.
+if not exist "$(D3D10RootDir)packages\$(GAMENAME)\$(ProjectName)" mkdir "$(D3D10RootDir)packages\$(GAMENAME)\$(ProjectName)"
+copy /y "$(D3D10RootDir)Shaders\*.fx" "$(D3D10RootDir)packages\$(GAMENAME)\$(ProjectName)" || exit /b 1
+copy /y "$(D3D10RootDir)Shaders\*.fxh" "$(D3D10RootDir)packages\$(GAMENAME)\$(ProjectName)" || exit /b 1
+if exist "$(D3D10RootDir)Shaders\*.png" (copy /y "$(D3D10RootDir)Shaders\*.png" "$(D3D10RootDir)packages\$(GAMENAME)\$(ProjectName)" || exit /b 1)
+rem     The .int files for all three renderers live in one place at the repository root,
+rem     so a caption or prompt is edited once for all of them.
+copy /y "$(D3D10RootDir)..\ints\$(TargetName).int" "$(D3D10RootDir)packages\$(GAMENAME)" || exit /b 1
+copy /y "$(TargetPath)" "$(D3D10RootDir)packages\$(GAMENAME)" || exit /b 1
+
+rem --- Optionally deploy straight into an installed game. Set the game's directory in an
+rem     untracked local.props; see local.props.example. Skipped, quietly, when unset. ---
+if "$(GAMEDIR)"=="" goto :deploydone
+if not exist "$(GAMEDIR)\system" echo GAMEDIR "$(GAMEDIR)" not found - skipping game deployment. &amp; goto :deploydone
+if not exist "$(GAMEDIR)\system\$(ProjectName)" mkdir "$(GAMEDIR)\system\$(ProjectName)"
+copy /y "$(D3D10RootDir)Shaders\*.fx" "$(GAMEDIR)\system\$(ProjectName)" || exit /b 1
+copy /y "$(D3D10RootDir)Shaders\*.fxh" "$(GAMEDIR)\system\$(ProjectName)" || exit /b 1
+if exist "$(D3D10RootDir)Shaders\*.png" (copy /y "$(D3D10RootDir)Shaders\*.png" "$(GAMEDIR)\system\$(ProjectName)" || exit /b 1)
+rem     The .int registers the class with the engine and puts the renderer in the game's own
+rem     settings UI. Without it this route installs a DLL the game will not offer, and reports
+rem     success.
+copy /y "$(D3D10RootDir)..\ints\$(TargetName).int" "$(GAMEDIR)\system\" || exit /b 1
+copy /y "$(TargetPath)" "$(GAMEDIR)\system\" || exit /b 1
+:deploydone
+</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+</Project>

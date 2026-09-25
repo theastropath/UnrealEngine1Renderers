@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Untracked per-machine game locations; see local.props.example. -->
+  <Import Project="$(MSBuildThisFileDirectory)local.props" Condition="Exists('$(MSBuildThisFileDirectory)local.props')" />
+  <PropertyGroup Label="UserMacros">
+    <GAMENAME>Klingon</GAMENAME>
+    <GAMEDIR>$(GAMEDIR_KLINGON)</GAMEDIR>
+    <!--
+      Left empty, as for Nerf: the SDK under Games\Klingon carries Editor, Fire, WinDrv, Window
+      and GlideDrv libraries but no game executable, so there is nothing here to derive it from.
+      Only GAMENAME and GAMEDIR are consumed, by Render DLL.props, so an empty value costs
+      nothing. A wrong one would reach deploy.ps1's safety check and make it refuse a correct
+      install.
+
+      TODO: fill in once confirmed against a real installation.
+    -->
+    <GAMEEXE></GAMEEXE>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <!--
+    The one game here built ANSI, not Unicode, and it has to be: Games\Klingon's prebuilt Core.lib
+    exports entry points taking char const* where every other SDK here exports the wide form
+    (dumpbin shows PBD against their PBG), and its Core.h selects TCHAR from _UNICODE just as theirs
+    do. Asking for Unicode sends the linker looking for wide symbols the library does not contain:
+    a clean compile followed by two dozen unresolved externals.
+
+    The setting lives on the two Klingon configurations in d3d10drv.vcxproj, not here.
+    Microsoft.Cpp.props turns CharacterSet into the UNICODE and _UNICODE defines and is imported
+    before any of these sheets, so a CharacterSet set here would be read after the decision it
+    feeds and silently do nothing.
+  -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <!--
+        Engine 219, the oldest tree here. Its render interface is the Unreal Gold 226 one and older
+        still, so KLINGON sets the OLD_URENDERDEVICE umbrella in d3d10drv.h: Flush takes no argument,
+        Exec is pure virtual so nothing may chain to it, DECLARE_CLASS takes the three-argument form
+        and there is no URenderDevice::DetailTextures.
+
+        Beyond that umbrella it needs a define of its own. Its URenderDevice stops at EndFlash()
+        and carries only Viewport and eight capability bitfields, so there is no SupportsTC to
+        negotiate texture compression through - compression is forced off, not merely defaulted
+        off - and no SetSceneNode, PrecacheTexture, Draw3DLine, Draw2DClippedLine or DrawStats
+        slot. Its FTextureInfo has no Texture pointer and packs the realtime flags into a
+        TextureFlags DWORD. Its engine calls StaticConstructor as a plain function taking the
+        UClass, not as a method on the class default object.
+      -->
+      <PreprocessorDefinitions>KLINGON;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="GAMENAME">
+      <Value>$(GAMENAME)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEDIR">
+      <Value>$(GAMEDIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEEXE">
+      <Value>$(GAMEEXE)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

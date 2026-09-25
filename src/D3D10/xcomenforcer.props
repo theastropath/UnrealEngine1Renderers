@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Untracked per-machine game locations; see local.props.example. -->
+  <Import Project="$(MSBuildThisFileDirectory)local.props" Condition="Exists('$(MSBuildThisFileDirectory)local.props')" />
+  <PropertyGroup Label="UserMacros">
+    <GAMENAME>XComEnforcer</GAMENAME>
+    <GAMEDIR>$(GAMEDIR_XCOMENFORCER)</GAMEDIR>
+    <GAMEEXE>Enforcer.exe</GAMEEXE>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <!--
+        Engine 420, whose render interface is Unreal Tournament's, so it takes UT's define rather
+        than one of its own. That define reaches exactly two places in this renderer, and both suit
+        this SDK: the four-argument DECLARE_CLASS in d3d10drv.h and the FTime overload of
+        UTexture::Lock the bump map path calls. It also carries UT's automatic widescreen field of
+        view default of 90 - see the changelog. UnRender.h, UnTex.h and Engine.h here are
+        byte-identical to UT's; UnRenDev.h adds a LOCKR_Bink lock flag, which cannot matter as this
+        renderer never reads RenderLockFlags, and drops the 'static' from StaticConstructor, a
+        non-virtual method this renderer declares for itself either way.
+      -->
+      <PreprocessorDefinitions>UNREALTOURNAMENT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="GAMENAME">
+      <Value>$(GAMENAME)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEDIR">
+      <Value>$(GAMEDIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEEXE">
+      <Value>$(GAMEEXE)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

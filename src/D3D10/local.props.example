@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Per-machine game locations, for deploying a build straight into an installed game.
+
+  Copy this file to local.props and fill in the paths you have. local.props is ignored by git, so
+  these stay out of the repository: the game .props sheets used to carry them, which meant every
+  contributor had to edit tracked files to use the feature and could commit their own paths back.
+
+  Anything left empty simply switches the deployment step off for that game - the build still
+  stages into packages\<game>\, which is what deploy.ps1 installs from.
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="LocalGameDirs">
+    <GAMEDIR_UNREALTOURNAMENT></GAMEDIR_UNREALTOURNAMENT>
+    <GAMEDIR_UNREALGOLD></GAMEDIR_UNREALGOLD>
+    <GAMEDIR_UNREAL_224></GAMEDIR_UNREAL_224>
+    <GAMEDIR_DEUSEX></GAMEDIR_DEUSEX>
+    <GAMEDIR_RUNE></GAMEDIR_RUNE>
+    <GAMEDIR_RUNE_100></GAMEDIR_RUNE_100>
+    <GAMEDIR_XCOMENFORCER></GAMEDIR_XCOMENFORCER>
+    <GAMEDIR_NERF></GAMEDIR_NERF>
+    <GAMEDIR_HARRYPOTTER></GAMEDIR_HARRYPOTTER>
+    <GAMEDIR_KLINGON></GAMEDIR_KLINGON>
+  </PropertyGroup>
+</Project>

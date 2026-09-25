@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deus Ex Debug|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deus Ex Debug|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deus Ex Release|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deus Ex Release|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments>-hax0r -skipdialog</LocalDebuggerCommandArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rune 1.00 Debug|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rune 1.00 Debug|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rune 1.00 Release|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rune 1.00 Release|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rune Debug|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rune Debug|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rune Release|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rune Release|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Gold Debug|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Gold Debug|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Gold Release|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Gold Release|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Debug|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Debug|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Release|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Release|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nerf Debug|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+</Project>

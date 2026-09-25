@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{7c2d27ab-359c-555e-bf3f-67f7d814ae4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device">
+      <UniqueIdentifier>{8e21559e-72b3-50ab-a99b-b877c5a2d54e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Draw">
+      <UniqueIdentifier>{e71e722f-7720-887c-3571-bea1df1497a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effects">
+      <UniqueIdentifier>{68111d82-b5f9-1293-cb39-c7c877f2b775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Frame">
+      <UniqueIdentifier>{bf73dedb-1826-10e7-1d9a-579f7b36f0d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{9c3193bf-78b3-c541-1228-073335f3595d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Package">
+      <UniqueIdentifier>{2e8ebe78-2cb3-cb96-0538-46314ef4c4e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{cba384a1-7eb0-5130-71e9-df980c4da5f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{f20cd876-e5c7-5ed2-27e4-bf885df210ff}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core\Misc.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D10Drv.cpp" />
+    <ClCompile Include="Device\Config.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Device\D3D.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Device\Exec.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Device\Init.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw\ComplexSurface.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw\DeferredGouraud.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw\FogSurface.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw\Gouraud.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw\Line.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw\Support.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw\Tile.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\FrameLimit.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\Gamma.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\Lock.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\SceneNode.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Deferred.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\DynamicGeometryBuffer.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\GeometryBuffer.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_ComplexSurface.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_Dummy.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_FinalPass.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_FirstPass.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_FogSurface.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_GouraudPolygon.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_HDR.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_Line.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_PostAA.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_Postprocess.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_Tile.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader_Unreal.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\LightmapAtlas.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\Precache.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\TexConverter.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\TextureCache.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\DoxyMain.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Misc.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Resource.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D10.h" />
+    <ClInclude Include="D3D10Drv.h" />
+    <ClInclude Include="Device\D3D.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Deferred.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\DynamicGeometryBuffer.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\GeometryBuffer.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\VertexFormats.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\CustomFlags.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\PolyFlags.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_ComplexSurface.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_Dummy.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_FinalPass.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_FirstPass.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_FogSurface.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_GouraudPolygon.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_HDR.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_Line.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_PostAA.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_Postprocess.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_Tile.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader_Unreal.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\LightmapAtlas.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\Precache.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\TexConverter.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\TextureCache.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Core\res.rc">
+      <Filter>Core</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Shaders\common.fxh">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\complexsurface.fx">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\finalpass.fx">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\firstpass.fx">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\fogsurface.fx">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\gouraudpolygon.fx">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\hdr.fx">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\line.fx">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\polyflags.fxh">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\postaa.fx">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\postprocessing.fxh">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\states.fxh">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\tile.fx">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\unreal_pom.fx">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\Shaders\unrealpool.fxh">
+      <Filter>Effects</Filter>
+    </None>
+    <None Include="..\..\ints\D3D10Drv.int">
+      <Filter>Package</Filter>
+    </None>
+  </ItemGroup>
+</Project>
