@@ -38,13 +38,16 @@ These renderers are built for the following games:
   * Navigate into the "D3D9" directory and run the build script: ```.\build.bat <GameName>```
     * If no game name is provided, it will default to "UnrealTournament".  
     * If an invalid name is provided, it will list all of the possible build targets.
+  * The compiled output will be placed into the ```System/<GameName>``` directories in the "D3D9" folder.
 
 ### OpenGL
   * Navigate into the "OpenGL" directory and run the build script: ```.\build.bat <Release|Debug> <GameName>```
     * if no parameters are provided, it will default to "Release UnrealTournament".
     * If an invalid game name is provided, it will list all of the possible build targets.
+  * The compiled output will be placed into the ```System/<GameName>``` directories in the "OpenGL" folder.
 
 ### Direct3D 10
   * Navigate into the "D3D10" directory and run the Powershell build script: ```powershell.exe ./build.ps1```
     * This build script will compile all build targets, both "debug" and "release".
+  * The compiled output will be placed into the ```packages/<GameName>``` directories in the "D3D10" folder.
 
