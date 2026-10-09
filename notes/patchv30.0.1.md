@@ -2,6 +2,7 @@ Add your patchnotes for release v30.0.1 here
 
 ## Major Changes
  - OpenGL & D3D9: Prevent brightness from overflowing.
+ - OpenGL & D3D9: External DDS texture support (aka Texture Override).
  - D3D9: Extend and clamp gamma with more range, since it has an exponential growth curve.
  - D3D9: Set antialiasing to 8 by default, like the other renderers.
  - D3D10: Normalize blue shift properly on HDR.
@@ -25,6 +26,7 @@ Add your patchnotes for release v30.0.1 here
   - OpenGL: Clamp texture size.
   - OpenGL: Clamp TMUNITS.
   - OpenGL: Detect CPU features in a less intensive way.
+  - OpenGL: DXT1 color testing.
   - D3D9: Add debug log and skip frame when output device cannot be acquired.
   - D3D10: Standardize error reporting on texture conversion failure.
   - Use consistent renderer names.

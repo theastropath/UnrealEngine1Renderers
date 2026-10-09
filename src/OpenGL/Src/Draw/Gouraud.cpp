@@ -121,6 +121,8 @@ void UOpenGLRenderDevice::DrawGouraudPolygon(FSceneNode *Frame, FTextureInfo &In
 	UTGLR_DEBUG_CALL_COUNT(DrawGouraudPolygon);
 	guard(UOpenGLRenderDevice::DrawGouraudPolygon);
 
+	PolyFlags |= GetOverridePolyFlags(&Info);
+
 	DWORD PolyFlags2 = 0;
 
 	//Possibly another node's.

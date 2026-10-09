@@ -163,6 +163,10 @@ void UD3D9RenderDevice::Flush(UBOOL AllowPrecache)
 	EndBuffering();
 	m_lightmapAtlas.Reset();
 
+	//The binds these described are going with the rest of the cache.
+	ReleasePendingOverride();
+	m_overrideRecords.clear();
+
 	for (u = 0; u < (DWORD)TMUnits; u++) {
 		m_d3dDevice->SetTexture(u, NULL);
 	}

@@ -110,10 +110,12 @@ void UD3D9RenderDevice::StaticConstructorBody() {
 	SC_AddBoolConfigParam(1, TEXT("TexPool"), CPP_PROPERTY_LOCAL(UseTexPool), 1);
 	SC_AddBoolConfigParam(0, TEXT("CacheStaticMaps"), CPP_PROPERTY_LOCAL(CacheStaticMaps), 1);
 	SC_AddIntConfigParam(TEXT("TextureCacheBudgetMegs"), CPP_PROPERTY_LOCAL(TexCacheBudgetMegs), 512);
-	SC_AddBoolConfigParam(2, TEXT("GenerateMipMaps"), CPP_PROPERTY_LOCAL(GenerateMipMaps), 1);
+	SC_AddBoolConfigParam(3, TEXT("GenerateMipMaps"), CPP_PROPERTY_LOCAL(GenerateMipMaps), 1);
 	//Only useful together. Neighbouring surfaces sharing a texture still bind their own lightmap.
-	SC_AddBoolConfigParam(1, TEXT("LightmapAtlas"), CPP_PROPERTY_LOCAL(LightmapAtlas), 1);
-	SC_AddBoolConfigParam(0, TEXT("SurfaceBatching"), CPP_PROPERTY_LOCAL(UseSurfaceBatching), 1);
+	SC_AddBoolConfigParam(2, TEXT("LightmapAtlas"), CPP_PROPERTY_LOCAL(LightmapAtlas), 1);
+	SC_AddBoolConfigParam(1, TEXT("SurfaceBatching"), CPP_PROPERTY_LOCAL(UseSurfaceBatching), 1);
+	//Costs nothing where the directory beside System does not exist, which is the usual case.
+	SC_AddBoolConfigParam(0, TEXT("TextureOverrides"), CPP_PROPERTY_LOCAL(UseTextureOverrides), 1);
 	SC_AddIntConfigParam(TEXT("RenderThreads"), CPP_PROPERTY_LOCAL(RenderThreads), 0);
 	SC_AddBoolConfigParam(0, TEXT("DeferredRecording"), CPP_PROPERTY_LOCAL(DeferredRecording), 1);
 	SC_AddIntConfigParam(TEXT("DynamicTexIdRecycleLevel"), CPP_PROPERTY_LOCAL(DynamicTexIdRecycleLevel), 100);
@@ -170,6 +172,10 @@ void UD3D9RenderDevice::StaticConstructorBody() {
 
 	m_pNoTexObj = NULL;
 	m_pAlphaTexObj = NULL;
+
+	m_pOverrideFileData = NULL;
+	m_overrideFileBytes = 0;
+	m_overrideImageValid = false;
 
 	m_d3dVertexColorBuffer = NULL;
 	m_d3dSecondaryColorBuffer = NULL;

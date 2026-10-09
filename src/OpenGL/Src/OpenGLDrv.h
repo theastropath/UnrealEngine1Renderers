@@ -125,6 +125,28 @@ static inline void TexInfoClearRealtimeChanged(FTextureInfo &Info) {
 #endif
 }
 
+//Anything the engine may rewrite under us, which an override on disk cannot stand in for.
+static inline UBOOL TexInfoVolatile(const FTextureInfo &Info) {
+#ifdef UTGLR_KLINGON_BUILD
+	return (Info.TextureFlags & (TF_RealtimeChanged | TF_Realtime | TF_Parametric)) != 0;
+#else
+	return (Info.bRealtimeChanged || Info.bRealtime || Info.bParametric) != 0;
+#endif
+}
+
+/*
+The object an override is named after. Klingon's FTextureInfo records none, which is
+what disables overrides on that build: without a name there is no file to look for.
+*/
+static inline UTexture *TexInfoTexture(const FTextureInfo &Info) {
+#ifdef UTGLR_KLINGON_BUILD
+	(void)Info;
+	return NULL;
+#else
+	return Info.Texture;
+#endif
+}
+
 /*-----------------------------------------------------------------------------
 	The End.
 -----------------------------------------------------------------------------*/

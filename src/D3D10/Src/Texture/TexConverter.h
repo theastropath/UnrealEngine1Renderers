@@ -35,6 +35,20 @@ private:
 	*/
 	void conversionFailed(const FTextureInfo &Info, const char *reason) const;
 
+	/**
+	Load one override file.
+
+	Shared\ddsfile.h is tried first so that a DDS is read by exactly the same code
+	the D3D9 and OpenGL renderers read it with, and a pack therefore behaves the
+	same on all three. D3DX10 is kept behind it for everything that parser declines,
+	which is how packs holding PNG or uncompressed DDS keep working here.
+
+	\param mipLevels Levels to take. 0 and D3DX10_DEFAULT both mean all of them,
+		and the value reaches D3DX10 untouched when the fallback runs.
+	\return false when neither route produced a texture.
+	*/
+	bool loadOverrideFile(const TCHAR *fileName, UINT mipLevels, ID3D10Texture2D **ppTexture) const;
+
 public:
 	TexConverter(TextureCache *textureCache);
 	bool loadOverride(const FTextureInfo &Info, DWORD PolyFlags) const;

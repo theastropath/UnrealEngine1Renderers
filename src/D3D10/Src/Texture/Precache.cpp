@@ -71,7 +71,7 @@ void UD3D10RenderDevice::PrecacheTexture(FTextureInfo &Info, DWORD PolyFlags) {
 		}
 	}
 
-	if (!texConverter->loadOverride(Info, PolyFlags)) {
+	if (!options.textureOverrides || !texConverter->loadOverride(Info, PolyFlags)) {
 		texConverter->convertAndCache(Info, PolyFlags);
 	}
 }

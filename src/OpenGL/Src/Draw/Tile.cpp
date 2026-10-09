@@ -11,6 +11,8 @@ void UOpenGLRenderDevice::DrawTile(FSceneNode *Frame, FTextureInfo &Info, FLOAT 
 
 	const DWORD PolyFlags2 = 0;
 
+	PolyFlags |= GetOverridePolyFlags(&Info);
+
 	EndDeferredGouraudPolys();
 	EndBufferingExceptTiles();
 

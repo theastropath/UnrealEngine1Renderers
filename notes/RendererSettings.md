@@ -68,6 +68,7 @@ This page should explain all of the settings available in the renderers.
 | TexPool | ✅ | ❌ | ✅ | Should be set to True. |
 | TextureCacheBudgetMegs | ✅ | ✅ | ✅ | In MB, the threshold of memory that can be actively used before reporting a warning about memory usage.  Disabled when set to 0. |
 | TextureFiltering | ❌ | ✅ | ❌ | Set to 0 gives point filtering, 1 gives linear filtering, 2 gives anisotropic filtering |
+| TextureOverrides | ✅ | ✅ | ✅ | Enable loading of loose .dds textures from the ./Textures folder. D3D10 supports the full DDS format, while D3D9 and OpenGL 1.x lack bump mapping and height. |
 | Trilinear | ✅ | ❌ | ✅ | Enables trilinear texture filtering |
 | TripleBuffering | ✅ | ❌ | ❌ | Enables triple buffering. |
 | UnlimitedViewDistance | ❌ | ✅ | ❌ | Sets view distance to the maximum supported map size. By request. No reason to touch this. |

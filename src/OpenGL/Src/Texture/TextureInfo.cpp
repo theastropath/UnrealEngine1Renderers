@@ -4,6 +4,7 @@
 
 #include "../OpenGLDrv.h"
 #include "../OpenGL.h"
+#include "dxtblocks.h"
 
 void UOpenGLRenderDevice::CacheTextureInfo(FCachedTexture *pBind, const FTextureInfo &Info, DWORD PolyFlags) {
 //Klingon has no Texture member.
@@ -134,6 +135,9 @@ void UOpenGLRenderDevice::CacheTextureInfo(FCachedTexture *pBind, const FTexture
 		texFlags |= TEX_FLAG_NO_CLAMP;
 	}
 
+	if (TryCacheOverrideTextureInfo(pBind, Info, UCopyBits, VCopyBits)) {
+		return;
+	}
 
 	//PF_Masked cannot change once a texture is updated.
 	bool paletted = false;
@@ -214,7 +218,14 @@ void UOpenGLRenderDevice::CacheTextureInfo(FCachedTexture *pBind, const FTexture
 		//Declining here routes to the decoder below.
 		if (SupportsTC && (BaseMip < (INT)Info.NumMips) && ((UCopyBits | VCopyBits) == 0)) {
 			if (srcDXTType == 1) {
-				if (TexDXT1ToDXT3 && (!(PolyFlags & PF_Masked))) {
+				bool asDXT3 = (TexDXT1ToDXT3 && (!(PolyFlags & PF_Masked))) ? true : false;
+
+				//The relabel is only equivalent for blocks in the four colour mode.
+				if (asDXT3 && DXT1HasThreeColorBlocks(Info, BaseMip, MaxLevel, UBits, VBits)) {
+					asDXT3 = false;
+				}
+
+				if (asDXT3) {
 					pBind->texType = TEX_TYPE_COMPRESSED_DXT1_TO_DXT3;
 					//texSourceFormat is unused for compressed textures.
 					pBind->texInternalFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;

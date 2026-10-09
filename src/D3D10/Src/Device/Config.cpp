@@ -131,6 +131,7 @@ void UD3D10RenderDevice::staticConstructorBody() {
 	new (scClass, TEXT("FrameRateLimit"), RF_Public) UIntProperty(CPP_PROPERTY(options.FPSLimit), TEXT("Options"), CPF_Config);
 	new (scClass, TEXT("SingleCpuAffinity"), RF_Public) UBoolProperty(CPP_PROPERTY(options.singleCpuAffinity), TEXT("Options"), CPF_Config);
 	new (scClass, TEXT("TextureCacheBudgetMegs"), RF_Public) UIntProperty(CPP_PROPERTY(options.textureCacheBudgetMegs), TEXT("Options"), CPF_Config);
+	new (scClass, TEXT("TextureOverrides"), RF_Public) UBoolProperty(CPP_PROPERTY(options.textureOverrides), TEXT("Options"), CPF_Config);
 	new (scClass, TEXT("GammaOffset"), RF_Public) UFloatProperty(CPP_PROPERTY(options.gammaOffset), TEXT("Options"), CPF_Config);
 	//The blend state stays on. An old ini key of that name is ignored.
 	new (scClass, TEXT("UnlimitedViewDistance"), RF_Public) UBoolProperty(CPP_PROPERTY(options.unlimitedViewDistance), TEXT("Options"), CPF_Config);

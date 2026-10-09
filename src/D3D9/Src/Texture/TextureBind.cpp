@@ -309,11 +309,14 @@ void UD3D9RenderDevice::SetTextureNoCheck(DWORD texNum, FTexInfo &Tex, FTextureI
 
 		m_texConvertCtx.pBind = pBind;
 
-		UBOOL SkipMipmaps = (Info.NumMips == 1);
+		//A replacement brings its own chain, so the engine's mip count says nothing about it.
+		const bool isOverride = (pBind->texType == TEX_TYPE_OVERRIDE_DDS);
+
+		UBOOL SkipMipmaps = isOverride ? (pBind->MaxLevel == 0) : (Info.NumMips == 1);
 		INT MaxLevel = pBind->MaxLevel;
 
 		//A single mip source still gets a full chain where the texture object already has the levels.
-		UBOOL BuildMipmaps = SkipMipmaps && (pBind->pTexObj->GetLevelCount() > 1) &&
+		UBOOL BuildMipmaps = !isOverride && SkipMipmaps && (pBind->pTexObj->GetLevelCount() > 1) &&
 			CanDownsampleTexFormat(pBind->texFormat);
 		UBOOL HasMipmaps = !SkipMipmaps || BuildMipmaps;
 
@@ -355,6 +358,12 @@ void UD3D9RenderDevice::SetTextureNoCheck(DWORD texNum, FTexInfo &Tex, FTextureI
 
 		m_texConvertCtx.texWidthPow2 = 1 << pBind->UBits;
 		m_texConvertCtx.texHeightPow2 = 1 << pBind->VBits;
+
+		//A replacement replaces the whole chain
+		if (isOverride) {
+			UploadOverrideLevels(pBind, MaxUploadLevel);
+			MaxUploadLevel = -1;
+		}
 
 		guard(WriteTexture);
 		INT Level;

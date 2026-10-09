@@ -20,6 +20,9 @@ void UD3D9RenderDevice::DrawTile(FSceneNode *Frame, FTextureInfo &Info, FLOAT X,
 
 	const DWORD PolyFlags2 = 0;
 
+	//As on a surface: a replacement's sidecar flags have to be in hand before the blend is chosen.
+	PolyFlags |= GetOverridePolyFlags(&Info);
+
 	EndDeferredGouraudPolys();
 	EndBufferingExcept(BV_TYPE_TILES);
 

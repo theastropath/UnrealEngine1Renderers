@@ -125,6 +125,9 @@ void UD3D9RenderDevice::CacheTextureInfo(FCachedTexture *pBind, const FTextureIn
 		texFlags |= TEX_FLAG_NO_CLAMP;
 	}
 
+	if (TryCacheOverrideTextureInfo(pBind, Info, UCopyBits, VCopyBits)) {
+		return;
+	}
 
 	//PF_Masked cannot change once an existing texture is updated.
 	//Texture type is cached here.

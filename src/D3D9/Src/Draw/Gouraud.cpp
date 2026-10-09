@@ -149,6 +149,9 @@ void UD3D9RenderDevice::DrawGouraudPolygon(FSceneNode *Frame, FTextureInfo &Info
 		return;
 	}
 
+	//As on a surface: a replacement's sidecar flags have to be in hand before the blend is chosen.
+	PolyFlags |= GetOverridePolyFlags(&Info);
+
 	DWORD PolyFlags2 = 0;
 
 	EndDeferredGouraudPolysForFrame(Frame);

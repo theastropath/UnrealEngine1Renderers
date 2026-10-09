@@ -147,7 +147,14 @@ void UOpenGLRenderDevice::DrawComplexSurface(FSceneNode *Frame, FSurfaceInfo &Su
 }
 
 void UOpenGLRenderDevice::DrawComplexSurfaceChunk(const FSurfaceInfo &Surface, const FSurfaceFacet &Facet, INT numVerts) {
-	const DWORD PolyFlags = Surface.PolyFlags;
+	const DWORD PolyFlags = Surface.PolyFlags | GetOverridePolyFlags(Surface.Texture);
+
+	FTextureInfo detailOverride;
+	FTextureInfo *pDetailTexture = Surface.DetailTexture;
+	if (HasDetailOverride(Surface.Texture)) {
+		MakeDetailOverrideInfo(*Surface.Texture, detailOverride);
+		pDetailTexture = &detailOverride;
+	}
 
 	m_csPtCount = numVerts;
 
@@ -178,7 +185,7 @@ void UOpenGLRenderDevice::DrawComplexSurfaceChunk(const FSurfaceInfo &Surface, c
 
 	//Never both at once.
 	bool drawDetailTexture = false;
-	if ((DetailTextures != 0) && Surface.DetailTexture && !Surface.FogMap) {
+	if ((DetailTextures != 0) && pDetailTexture && !Surface.FogMap) {
 		drawDetailTexture = true;
 	}
 
@@ -271,7 +278,7 @@ void UOpenGLRenderDevice::DrawComplexSurfaceChunk(const FSurfaceInfo &Surface, c
 		}
 
 		if (singlePassDetail) {
-			RenderPasses_SingleOrDualTextureAndDetailTexture(*Surface.DetailTexture);
+			RenderPasses_SingleOrDualTextureAndDetailTexture(*pDetailTexture);
 		} else {
 			RenderPasses();
 
@@ -294,9 +301,9 @@ void UOpenGLRenderDevice::DrawComplexSurfaceChunk(const FSurfaceInfo &Surface, c
 
 			//Something needs it.
 			if (UseFragmentProgram) {
-				DrawDetailTexture_FP(*Surface.DetailTexture);
+				DrawDetailTexture_FP(*pDetailTexture);
 			} else {
-				DrawDetailTexture(*Surface.DetailTexture, numVerts, clipDetailTexture);
+				DrawDetailTexture(*pDetailTexture, numVerts, clipDetailTexture);
 			}
 		}
 	} else {

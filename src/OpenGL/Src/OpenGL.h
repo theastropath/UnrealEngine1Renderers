@@ -41,6 +41,9 @@
 #define UTGLR_RBTREE_REUSE_NODES
 #include "c_rbtree.h"
 
+#include "ddsfile.h"
+#include "textureoverride.h"
+
 
 /*-----------------------------------------------------------------------------
 	Globals.
@@ -113,7 +116,9 @@ class UOpenGLRenderDevice : public URenderDevice {
 		TEX_TYPE_DECOMPRESSED_DXT5,
 		TEX_TYPE_PALETTED,
 		TEX_TYPE_HAS_PALETTE,
-		TEX_TYPE_NORMAL
+		TEX_TYPE_NORMAL,
+		//Replaced from a file on disk. Its chain comes from there, not from Info.Mips.
+		TEX_TYPE_OVERRIDE_DDS
 	};
 #define TEX_FLAG_NO_CLAMP 0x00000001
 
@@ -466,6 +471,8 @@ class UOpenGLRenderDevice : public URenderDevice {
 	UBOOL UseTexIdPool;
 	UBOOL UseTexPool;
 	UBOOL CacheStaticMaps;
+	//Replacement textures read from the directory beside the game's System folder.
+	UBOOL UseTextureOverrides;
 	INT TexCacheBudgetMegs;
 	INT DynamicTexIdRecycleLevel;
 	UBOOL TexDXT1ToDXT3;
@@ -1430,6 +1437,53 @@ class UOpenGLRenderDevice : public URenderDevice {
 	void FASTCALL SetTextureNoCheck(FTexInfo &Tex, FTextureInfo &Info, DWORD PolyFlags);
 	void FASTCALL UploadTextureExec(FTextureInfo &Info, DWORD PolyFlags, FCachedTexture *pBind, bool existingBind, bool needTexAllocate);
 	void FASTCALL CacheTextureInfo(FCachedTexture *pBind, const FTextureInfo &Info, DWORD PolyFlags);
+
+	/**@name Replacement textures loaded from disk
+	The file is read once, while the bind's dimensions and format are being decided, and held
+	until the upload that follows in the same call consumes it. Every path that decides a bind
+	goes on to upload it, so this does not outlive one SetTextureNoCheck, and it is released
+	defensively anyway on the next decision and on a flush.
+	*/
+	//@{
+	bool FASTCALL TryCacheOverrideTextureInfo(FCachedTexture *pBind, const FTextureInfo &Info, INT UCopyBits, INT VCopyBits);
+	void FASTCALL UploadOverrideLevels(FCachedTexture *pBind, INT MaxUploadLevel, bool needTexAllocate);
+	void ReleasePendingOverride(void);
+	bool OverrideFormatSupported(EDDSFormat format) const;
+
+	BYTE *m_pOverrideFileData;
+	DWORD m_overrideFileBytes;
+	FDDSImage m_overrideImage;
+	bool m_overrideImageValid;
+
+	// Keep the bind in memory
+	struct FTextureOverrideRecord {
+		QWORD CacheID;
+		DWORD PolyFlags;
+		BYTE HasDetail;
+	};
+
+	// Sorted by cache id.
+	std::vector<FTextureOverrideRecord> m_overrideRecords;
+	void FASTCALL RecordOverride(QWORD CacheID, DWORD PolyFlags, bool hasDetail);
+	const FTextureOverrideRecord *FASTCALL FindOverrideRecord(const FTextureInfo *pInfo) const;
+
+	/** \return The extra flags a sidecar asked for, or zero, which is the common answer. */
+	inline DWORD FASTCALL GetOverridePolyFlags(const FTextureInfo *pInfo) const {
+		const FTextureOverrideRecord *pRecord = FindOverrideRecord(pInfo);
+		return (pRecord != NULL) ? pRecord->PolyFlags : 0;
+	}
+
+	/** \return Whether a detail map was found beside this texture's replacement. */
+	inline bool FASTCALL HasDetailOverride(const FTextureInfo *pInfo) const {
+		const FTextureOverrideRecord *pRecord = FindOverrideRecord(pInfo);
+		return (pRecord != NULL) && (pRecord->HasDetail != 0);
+	}
+
+	static inline void FASTCALL MakeDetailOverrideInfo(const FTextureInfo &Diffuse, FTextureInfo &Out) {
+		Out = Diffuse;
+		Out.CacheID = (QWORD)Diffuse.CacheID | TEXOVERRIDE_DETAIL_CACHEID_BIT;
+	}
+	//@}
 
 	BYTE *FASTCALL GetTexComposeBuffer(DWORD sizeBytes);
 	void FreeTexComposeBuffer(void);

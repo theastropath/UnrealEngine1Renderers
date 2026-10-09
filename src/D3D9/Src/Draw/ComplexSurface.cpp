@@ -134,15 +134,22 @@ void UD3D9RenderDevice::DrawComplexSurface(FSceneNode *Frame, FSurfaceInfo &Surf
 }
 
 void UD3D9RenderDevice::DrawComplexSurfaceChunk(FSurfaceInfo &Surface, const FSurfaceFacet &Facet, INT numVerts) {
-	const DWORD PolyFlags = Surface.PolyFlags;
+	const DWORD PolyFlags = Surface.PolyFlags | GetOverridePolyFlags(Surface.Texture);
 
 	m_csPtCount = numVerts;
 
 	BuildComplexSurfaceIndices();
 
+	FTextureInfo detailOverride;
+	FTextureInfo *pDetailTexture = Surface.DetailTexture;
+	if (HasDetailOverride(Surface.Texture)) {
+		MakeDetailOverrideInfo(*Surface.Texture, detailOverride);
+		pDetailTexture = &detailOverride;
+	}
+
 	//Mutually exclusive.
 	bool drawDetailTexture = false;
-	if ((DetailTextures != 0) && Surface.DetailTexture && !Surface.FogMap) {
+	if ((DetailTextures != 0) && pDetailTexture && !Surface.FogMap) {
 		drawDetailTexture = true;
 	}
 
@@ -214,7 +221,7 @@ void UD3D9RenderDevice::DrawComplexSurfaceChunk(FSurfaceInfo &Surface, const FSu
 		}
 
 		if (singlePassDetail) {
-			RenderPasses_SingleOrDualTextureAndDetailTexture(*Surface.DetailTexture);
+			RenderPasses_SingleOrDualTextureAndDetailTexture(*pDetailTexture);
 		} else {
 			RenderPasses();
 
@@ -231,9 +238,9 @@ void UD3D9RenderDevice::DrawComplexSurfaceChunk(FSurfaceInfo &Surface, const FSu
 			}
 
 			if (UseFragmentProgram) {
-				DrawDetailTexture_FP(*Surface.DetailTexture);
+				DrawDetailTexture_FP(*pDetailTexture);
 			} else {
-				DrawDetailTexture(*Surface.DetailTexture, clipDetailTexture);
+				DrawDetailTexture(*pDetailTexture, clipDetailTexture);
 			}
 		}
 	} else {

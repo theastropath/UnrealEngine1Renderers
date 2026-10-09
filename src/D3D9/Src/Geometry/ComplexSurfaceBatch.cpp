@@ -336,14 +336,14 @@ bool FASTCALL UD3D9RenderDevice::TryBatchComplexSurface(FSurfaceInfo &Surface, c
 		return false;
 	}
 
-	const DWORD PolyFlags = Surface.PolyFlags;
+	const DWORD PolyFlags = Surface.PolyFlags | GetOverridePolyFlags(Surface.Texture);
 
 	if (GIsEditor && (PolyFlags & (PF_Selected | PF_FlatShaded))) {
 		return false;
 	}
 
 	//The batch has moved past.
-	if ((DetailTextures != 0) && Surface.DetailTexture && !Surface.FogMap) {
+	if ((DetailTextures != 0) && (Surface.DetailTexture || HasDetailOverride(Surface.Texture)) && !Surface.FogMap) {
 		return false;
 	}
 

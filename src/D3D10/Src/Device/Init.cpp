@@ -80,6 +80,7 @@ UBOOL UD3D10RenderDevice::Init(UViewport *InViewport, INT NewX, INT NewY, INT Ne
 	options.FPSLimit = getOption(TEXT("FrameRateLimit"), 120, false);
 	options.singleCpuAffinity = getOption(TEXT("SingleCpuAffinity"), 0, true);
 	options.textureCacheBudgetMegs = getOption(TEXT("TextureCacheBudgetMegs"), 512, false);
+	options.textureOverrides = getOption(TEXT("TextureOverrides"), 1, true);
 	//Off if edges misbehave.
 	options.lightmapAtlas = getOption(TEXT("LightmapAtlas"), 1, true);
 	if (!GConfig->GetFloat(TEXT("D3D10Drv.D3D10RenderDevice"), TEXT("GammaOffset"), options.gammaOffset)) {

@@ -7,6 +7,7 @@
 #include <D3dx10.h>
 #include "TexConverter.h"
 #include "../Shaders/PolyFlags.h"
+#include "ddsfile.h"
 
 /**
 Indexed by texture format. Rows stay contiguous and in enum order.
@@ -55,8 +56,9 @@ TextureCache::TextureMetaData TexConverter::buildMetaData(const FTextureInfo &In
 	}
 	return metadata;
 }
+
 //Relative to System.
-static const TCHAR *OVERRIDE_DIRECTORY = TEXT("..\\textures\\");
+static const TCHAR *OVERRIDE_DIRECTORY = TEXT("..\\Textures\\");
 
 /** Four misses per texture. */
 static bool overrideDirectoryExists() {
@@ -71,6 +73,108 @@ static bool overrideDirectoryExists() {
 			UD3D10RenderDevice::debugs("No override texture directory; not looking for override textures.");
 	}
 	return exists;
+}
+
+/** The DXGI format a parsed DDS maps onto, or UNKNOWN where D3DX10 should take it instead. */
+static DXGI_FORMAT overrideDXGIFormat(EDDSFormat format) {
+	switch (format) {
+		case DDS_FORMAT_DXT1:
+			return DXGI_FORMAT_BC1_UNORM;
+		case DDS_FORMAT_DXT3:
+			return DXGI_FORMAT_BC2_UNORM;
+		case DDS_FORMAT_DXT5:
+			return DXGI_FORMAT_BC3_UNORM;
+		default:
+			return DXGI_FORMAT_UNKNOWN;
+	}
+}
+
+bool TexConverter::loadOverrideFile(const TCHAR *fileName, UINT mipLevels, ID3D10Texture2D **ppTexture) const {
+	*ppTexture = nullptr;
+
+	//Read once, and handed to whichever route can use it.
+	unsigned char *fileData = nullptr;
+	size_t fileBytes = 0;
+	FILE *file = nullptr;
+	if (_tfopen_s(&file, fileName, TEXT("rb")) == 0 && file != nullptr) {
+		if (fseek(file, 0, SEEK_END) == 0) {
+			const long size = ftell(file);
+			if ((size > 0) && (size <= (64 * 1024 * 1024)) && (fseek(file, 0, SEEK_SET) == 0)) {
+				fileData = new (std::nothrow) unsigned char[(size_t)size];
+				if (fileData != nullptr) {
+					if (fread(fileData, 1, (size_t)size, file) == (size_t)size) {
+						fileBytes = (size_t)size;
+					} else {
+						delete[] fileData;
+						fileData = nullptr;
+					}
+				}
+			}
+		}
+		fclose(file);
+	}
+
+	FDDSImage image;
+	if ((fileData != nullptr) && DDSParse(fileData, fileBytes, image)) {
+		const DXGI_FORMAT dxgiFormat = overrideDXGIFormat(image.Format);
+		if (dxgiFormat != DXGI_FORMAT_UNKNOWN) {
+			UINT levels = image.NumMips;
+			if ((mipLevels != 0) && (mipLevels != (UINT)D3DX10_DEFAULT) && (levels > mipLevels)) {
+				levels = mipLevels;
+			}
+
+			D3D10_SUBRESOURCE_DATA *data = new (std::nothrow) D3D10_SUBRESOURCE_DATA[levels];
+			if (data != nullptr) {
+				const UINT blockBytes = (image.Format == DDS_FORMAT_DXT1) ? 8 : 16;
+				for (UINT i = 0; i < levels; i++) {
+					data[i].pSysMem = image.Levels[i].pData;
+					data[i].SysMemPitch = ((image.Levels[i].USize + 3) / 4) * blockBytes;
+					data[i].SysMemSlicePitch = image.Levels[i].Bytes;
+				}
+
+				D3D10_TEXTURE2D_DESC desc;
+				desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+				desc.ArraySize = 1;
+				desc.Width = image.USize;
+				desc.Height = image.VSize;
+				desc.MipLevels = levels;
+				desc.MiscFlags = 0;
+				desc.SampleDesc.Count = 1;
+				desc.SampleDesc.Quality = 0;
+				desc.Format = dxgiFormat;
+				desc.Usage = D3D10_USAGE_IMMUTABLE;
+				desc.CPUAccessFlags = 0;
+
+				*ppTexture = textureCache->createTexture(desc, data);
+				delete[] data;
+			}
+		}
+	}
+
+	delete[] fileData;
+
+	if (*ppTexture != nullptr) {
+		return true;
+	}
+
+	//Anything the shared parser declined, which is every format it does not cover.
+	D3DX10_IMAGE_LOAD_INFO loadInfo;
+	loadInfo.Width = D3DX10_DEFAULT;
+	loadInfo.Height = D3DX10_DEFAULT;
+	loadInfo.Depth = D3DX10_DEFAULT;
+	loadInfo.Filter = D3DX10_DEFAULT;
+	loadInfo.MipFilter = D3DX10_DEFAULT;
+	loadInfo.FirstMipLevel = D3DX10_DEFAULT;
+	loadInfo.Format = (DXGI_FORMAT)D3DX10_DEFAULT;
+	//Passed through untouched, so the fallback behaves exactly as it did before.
+	loadInfo.MipLevels = mipLevels;
+	loadInfo.MiscFlags = D3DX10_DEFAULT;
+	loadInfo.pSrcInfo = nullptr;
+	loadInfo.Usage = D3D10_USAGE_IMMUTABLE;
+	loadInfo.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+	loadInfo.CpuAccessFlags = 0;
+
+	return textureCache->loadFileTexture(fileName, ppTexture, &loadInfo);
 }
 
 /** \return true if one was present. */
@@ -109,22 +213,7 @@ bool TexConverter::loadOverride(const FTextureInfo &Info, DWORD PolyFlags) const
 	}
 
 	ID3D10Texture2D *texture = nullptr;
-	D3DX10_IMAGE_LOAD_INFO loadInfo;
-	loadInfo.Width = D3DX10_DEFAULT;
-	loadInfo.Height = D3DX10_DEFAULT;
-	loadInfo.Depth = D3DX10_DEFAULT;
-	loadInfo.Filter = D3DX10_DEFAULT;
-	loadInfo.MipFilter = D3DX10_DEFAULT;
-	loadInfo.FirstMipLevel = D3DX10_DEFAULT;
-	loadInfo.Format = (DXGI_FORMAT)D3DX10_DEFAULT;
-	loadInfo.MipLevels = D3DX10_DEFAULT;
-	loadInfo.MiscFlags = D3DX10_DEFAULT;
-	loadInfo.pSrcInfo = nullptr;
-	loadInfo.Usage = D3D10_USAGE_IMMUTABLE;
-	loadInfo.BindFlags = D3D10_BIND_SHADER_RESOURCE;
-	loadInfo.CpuAccessFlags = 0;
-
-	if (!textureCache->loadFileTexture(overrideFile[0], &texture, &loadInfo))
+	if (!loadOverrideFile(overrideFile[0], D3DX10_DEFAULT, &texture))
 		return false;
 
 
@@ -145,8 +234,7 @@ bool TexConverter::loadOverride(const FTextureInfo &Info, DWORD PolyFlags) const
 		return false;
 
 	for (int i = 0; i < TextureCache::DUMMY_NUM_EXTERNAL_TEXTURES; i++) {
-		loadInfo.MipLevels = TextureCache::externalTextures[i].mipLevels;
-		if (textureCache->loadFileTexture(overrideFile[1 + i], &texture, &loadInfo)) {
+		if (loadOverrideFile(overrideFile[1 + i], TextureCache::externalTextures[i].mipLevels, &texture)) {
 			textureCache->cacheTexture(Info.CacheID, metadata, texture, i);
 			SAFE_RELEASE(texture);
 		}

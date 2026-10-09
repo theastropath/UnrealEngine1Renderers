@@ -62,16 +62,20 @@ void UOpenGLRenderDevice::UploadTextureExec(FTextureInfo &Info, DWORD PolyFlags,
 		glColorTableEXT(GL_TEXTURE_2D, GL_RGBA, 256, GL_RGBA, GL_UNSIGNED_BYTE, Info.Palette);
 	}
 
-	DWORD memAllocSize = 1 << (pBind->UBits + pBind->VBits + 2);
-	if (memAllocSize > LOCAL_TEX_COMPOSE_BUFFER_SIZE) {
-		m_texConvertCtx.pCompose = GetTexComposeBuffer(memAllocSize);
-	} else {
-		m_texConvertCtx.pCompose = m_localTexComposeBuffer;
+	const bool isOverride = (pBind->texType == TEX_TYPE_OVERRIDE_DDS);
+
+	if (!isOverride) {
+		DWORD memAllocSize = 1 << (pBind->UBits + pBind->VBits + 2);
+		if (memAllocSize > LOCAL_TEX_COMPOSE_BUFFER_SIZE) {
+			m_texConvertCtx.pCompose = GetTexComposeBuffer(memAllocSize);
+		} else {
+			m_texConvertCtx.pCompose = m_localTexComposeBuffer;
+		}
 	}
 
 	m_texConvertCtx.pBind = pBind;
 
-	UBOOL SkipMipmaps = (Info.NumMips == 1) && !AlwaysMipmap;
+	UBOOL SkipMipmaps = isOverride ? (pBind->MaxLevel == 0) : ((Info.NumMips == 1) && !AlwaysMipmap);
 	INT MaxLevel = pBind->MaxLevel;
 
 	//Only allocating passes change the size.
@@ -125,6 +129,12 @@ void UOpenGLRenderDevice::UploadTextureExec(FTextureInfo &Info, DWORD PolyFlags,
 	//Both bit counts must be >= 0 here.
 	m_texConvertCtx.texWidthPow2 = 1 << pBind->UBits;
 	m_texConvertCtx.texHeightPow2 = 1 << pBind->VBits;
+
+	// A replacement replaces the whole chain.
+	if (isOverride) {
+		UploadOverrideLevels(pBind, MaxUploadLevel, needTexAllocate);
+		MaxUploadLevel = -1;
+	}
 
 	INT Level;
 	for (Level = 0; Level <= MaxUploadLevel; Level++) {

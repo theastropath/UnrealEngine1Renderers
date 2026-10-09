@@ -129,10 +129,12 @@ void UOpenGLRenderDevice::StaticConstructorBody() {
 	SC_AddBoolConfigParam(0, TEXT("CacheStaticMaps"), CPP_PROPERTY_LOCAL(CacheStaticMaps), 1);
 	SC_AddIntConfigParam(TEXT("TextureCacheBudgetMegs"), CPP_PROPERTY_LOCAL(TexCacheBudgetMegs), 512);
 	SC_AddIntConfigParam(TEXT("DynamicTexIdRecycleLevel"), CPP_PROPERTY_LOCAL(DynamicTexIdRecycleLevel), 100);
-	SC_AddBoolConfigParam(3, TEXT("TexDXT1ToDXT3"), CPP_PROPERTY_LOCAL(TexDXT1ToDXT3), 0);
-	SC_AddBoolConfigParam(2, TEXT("MultiDrawArrays"), CPP_PROPERTY_LOCAL(UseMultiDrawArrays), 1);
-	SC_AddBoolConfigParam(1, TEXT("VBO"), CPP_PROPERTY_LOCAL(UseVBO), 1);
-	SC_AddBoolConfigParam(0, TEXT("FragmentProgram"), CPP_PROPERTY_LOCAL_DCV(UseFragmentProgram), 1);
+	SC_AddBoolConfigParam(4, TEXT("TexDXT1ToDXT3"), CPP_PROPERTY_LOCAL(TexDXT1ToDXT3), 0);
+	SC_AddBoolConfigParam(3, TEXT("MultiDrawArrays"), CPP_PROPERTY_LOCAL(UseMultiDrawArrays), 1);
+	SC_AddBoolConfigParam(2, TEXT("VBO"), CPP_PROPERTY_LOCAL(UseVBO), 1);
+	SC_AddBoolConfigParam(1, TEXT("FragmentProgram"), CPP_PROPERTY_LOCAL_DCV(UseFragmentProgram), 1);
+	//Costs nothing where the directory beside System does not exist, which is the usual case.
+	SC_AddBoolConfigParam(0, TEXT("TextureOverrides"), CPP_PROPERTY_LOCAL(UseTextureOverrides), 1);
 	//An interval, unlike the D3D10 renderer's key of the same name.
 	//1 is vsync, 2 is half rate.
 	//Negative leaves the driver's own choice alone.
@@ -178,6 +180,10 @@ void UOpenGLRenderDevice::StaticConstructorBody() {
 
 	m_noTextureId = 0;
 	m_alphaTextureId = 0;
+
+	m_pOverrideFileData = NULL;
+	m_overrideFileBytes = 0;
+	m_overrideImageValid = false;
 
 	m_allocatedShaderNames = false;
 

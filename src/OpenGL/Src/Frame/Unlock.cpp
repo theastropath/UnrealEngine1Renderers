@@ -142,6 +142,9 @@ void UOpenGLRenderDevice::Flush(UBOOL AllowPrecache)
 	//About to be released.
 	DiscardDeferredGouraudPolys();
 
+	ReleasePendingOverride();
+	m_overrideRecords.clear();
+
 	for (u = 0; u < NUM_CTTree_TREES; u++) {
 		DWORD_CTTree_t *zeroPrefixBindTree = &m_zeroPrefixBindTrees[u];
 		for (DWORD_CTTree_t::node_t *zpbmPtr = zeroPrefixBindTree->begin(); zpbmPtr != zeroPrefixBindTree->end(); zpbmPtr = zeroPrefixBindTree->next_node(zpbmPtr)) {

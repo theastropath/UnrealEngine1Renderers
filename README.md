@@ -29,6 +29,35 @@ These renderers are built for the following games:
 
 ---
 
+## Texture Overrides
+
+All three renderers can load replacement textures from the `Textures` directory.
+
+### Optional extra files
+
+| File | Effect | Renderers |
+|---|---|---|
+| `Wall01.dds` | Replaces the texture | all three |
+| `Wall01.detail.dds` | Detail map, used even where the level supplies none | all three |
+| `Wall01.bump.dds` | Bump map | DirectX 10 only |
+| `Wall01.height.dds` | Height map, for parallax occlusion mapping | DirectX 10 only |
+| `Wall01.dds.flags` | Extra poly flags, one hex number | all three |
+
+Bump and height maps need shader features that OpenGL 1.x and the Direct3D 9 path do not have,
+so those two files are read by the DirectX 10 renderer only. Everything else behaves the same
+everywhere, which means one pack serves all three renderers.
+
+### Format
+
+DirectX 9 and OpenGL read **DDS only**, in DXT1, DXT3, DXT5 or uncompressed 32-bit BGRA, sized to
+a power of two. Supply the mip chain in the file.
+DirectX 10 reads the same files through the same parser, and still accepts anything else D3DX can open.
+
+Set `TextureOverrides=False` in the renderer's ini section to turn the feature off. Where the
+`Textures` directory does not exist, nothing is loaded and nothing is looked for.
+
+---
+
 ## To Compile
 
 ### Prerequisites

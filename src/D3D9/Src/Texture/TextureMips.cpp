@@ -29,6 +29,11 @@ bool UD3D9RenderDevice::CanGenerateMipmaps(const FCachedTexture *pBind, const FT
 		return false;
 	}
 
+	//A replacement supplies whatever chain it has, and nothing is filtered down into it.
+	if (pBind->texType == TEX_TYPE_OVERRIDE_DDS) {
+		return false;
+	}
+
 	if (pBind->MaxLevel < 1) {
 		return false;
 	}
@@ -47,6 +52,11 @@ bool UD3D9RenderDevice::CanGenerateMipmaps(const FCachedTexture *pBind, const FT
 }
 
 INT UD3D9RenderDevice::CalcTexLevelCount(const FCachedTexture *pBind, const FTextureInfo &Info) {
+	//A replacement's chain comes from its own file, whatever the engine's texture carries.
+	if (pBind->texType == TEX_TYPE_OVERRIDE_DDS) {
+		return pBind->MaxLevel + 1;
+	}
+
 	if ((Info.NumMips != 1) || CanGenerateMipmaps(pBind, Info)) {
 		return pBind->MaxLevel + 1;
 	}

@@ -49,6 +49,7 @@ private:
 		int unlimitedViewDistance; /**< Frustum to the map bound. */
 		int singleCpuAffinity; /**< Legacy engine timing workaround. */
 		int textureCacheBudgetMegs; /**< Zero is unlimited. */
+		int textureOverrides; /**< Replacement textures from the directory beside System. */
 		int lightmapAtlas; /**< Shared pages keep batches. */
 		int deferredRecording; /**< Built across threads. */
 		int renderThreads; /**< Zero for one per core. */
