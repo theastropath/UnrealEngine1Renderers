@@ -13,17 +13,17 @@ This page should explain all of the settings available in the renderers.
 | AlphaPalette | ❌ | ❌ | ✅ | Workaround for very old GeForce drivers. This should generally be set to true, unless issues are seen. |
 | AlphaToCoverage | ❌ | ✅ | ❌ | Smoothens the edges of 'masked' textures such as grates and leaves. Unfortunately, this does lead to artifacts where the textures don't tile (example). Requires at least 4x anti aliasing enabled to take effect. Valid settings: true/false. Default: false. Note: on some hardware this setting seems to result in black backgrounds around HUD icons, etc. I suspect this is a driver issue. |
 | Anisotropy | ✅ | ✅ | ✅ | Controls anisotropic texture filtering, which makes textures look less blurry at a distance.  0 is disabled, 1 is isotropic texture filtering, anything higher (up to 16) is the maximum degree of anisotropy to use for texture filtering. |
-| Antialiasing | ✅ | ✅ | ✅ | The number of samples to use per fragment for antialiasing, which filters jagged lines.  2 or 4 should generally work. |
+| Antialiasing | ✅ | ✅ | ✅ | The number of samples to use per fragment for antialiasing, which filters jagged lines.  2, 4, or 8 (default) should generally work. |
 | AutoFOV | ❌ | ✅ | ❌ | Automatically sets the field of view depending on the window/screen size. Might want to turn this off if you want to set an extra-wide FOV for multiplayer games. Valid settings: true/false. Default: true. |
 | BGRATextures | ❌ | ❌ | ✅ | Allows textures to be uploaded in BGRA format rather than RGBA if the GL_EXT_bgra extension is supported. |
 | BufferTileQuads | ❌ | ❌ | ✅ | Enables buffering in the DrawTile path, which may improve text rendering performance. |
 | BumpMapping | ❌ | ✅ | ❌ | Can be ignored unless you've got special textures installed. Attempts to fake bump mapping if textures have normal maps present. Requires a normal map to be either present in the texture's bump map slot, or provided as an extra external texture. Valid settings: true/false. Default: false. |
-| CacheStaticMaps | ✅ | ❌ | ✅ | ? |
+| CacheStaticMaps | ✅ | ❌ | ✅ | Keep a lightmaps upload rather than re-converting it whenever a surface is drawn again. |
 | ClassicLighting | ❌ | ✅ | ❌ | With this enabled, the lighting matches that of the original renderers. When disabled, HDR is used (in which case reverting to classic lighting improves performance). Valid settings: true/false. Default: true. |
-| ClipboardScreenshots | ❌ | ✅ | ❌ | ? |
-| DebugDrawDetailTextures | ✅ | ❌ | ✅ | ? |
-| DecalDepthBias | ❌ | ✅ | ❌ | ? |
-| DeferredRecording | ✅ | ✅ | ❌ | ? |
+| ClipboardScreenshots | ❌ | ✅ | ❌ | Screenshots taken using the in-game screenshot key (Rather than PrintScreen) will be copied to the clipboard as well. |
+| DebugDrawDetailTextures | ✅ | ❌ | ✅ | Used for debugging detail textures on the fly by using a very obvious (wrong) detail texture.  Leave disabled if not actively debugging. |
+| DecalDepthBias | ❌ | ✅ | ❌ | Allows moving decals back and forth if they disappear into geometry. |
+| DeferredRecording | ✅ | ✅ | ❌ | Records draw calls on a separate thread and reuses them as long as they aren't invalidated.  May cause a performance hit on CPUs with less than 4 cores. |
 | DetailClipping | ✅ | ❌ | ✅ | Enables the use of an experimental detail texture mode.  Costs more CPU time, but may improve performance in fill rate limited situations. |
 | DetailMax | ✅ | ❌ | ✅ | Set to 0 or 1 for standard one layer detail texturing if detail textures are enabled.  Set to 2 to enable a second detail texture layer.  The second layer will not show up unless SinglePassDetail is disabled. |
 | DetailTextures | ✅ | ❌ | ✅ | Enables detail textures. |
@@ -36,7 +36,7 @@ This page should explain all of the settings available in the renderers.
 | GammaOffsetRed | ✅ | ❌ | ✅ | Gamma offset for the red color channel specifically.  Not applied to screenshots. |
 | GenerateMipMaps | ✅ | ❌ | ❌ | Enables automatic mipmap generation.  Recommend that this setting is disabled, as support for this feature is often not supported properly. |
 | HardwareGamma | ✅ | ❌ | ✅ | When enabled, gamma adjustments will rely purely on the hardware rather than applying a gamma correction pass. |
-| Instancing | ❌ | ✅ | ❌ | ? |
+| Instancing | ❌ | ✅ | ❌ | Enable draw instancing.  Attempts to bundle all draw calls of the same together to optimize CPU <---> GPU messaging.  Seemingly no actual performance benefits. |
 | LightmapAtlas | ✅ | ✅ | ❌ | Packs lightmaps into shared pages. |
 | LODBias | ✅ | ✅ | ✅ | Allows mipmap selection bias to be adjusted.  Use negative values to pseudo sharpen textures.  Use positive values to blur textures and potentially improve performance. |
 | MaxLogTextureSize | ✅ | ❌ | ✅ | Set to 8 or 0. |
@@ -49,18 +49,18 @@ This page should explain all of the settings available in the renderers.
 | OneXBlending | ✅ | ✅ | ✅ | If enabled, matches what the D3D renderer does for blending in multitexture mode when applying lightmaps to world geometry. I can't say for sure which way is correct. In single texture mode, the D3D renderer does appear to do blending like the OpenGL renderer in single texture mode or multitexture mode without OneXBlending enabled. |
 | Palette | ❌ | ❌ | ✅ | Controls the use of paletted textures. If there is hardware support for paletted textures, using them can significantly improve performance. |
 | ParallaxOcclusionMapping | ❌ | ✅ | ❌ | Gives surfaces 3D relief. Pretty GPU intensive, and you might not like the way it looks. Will use an external height map texture if present, otherwise the detail texture is used. Valid settings: true/false. Default: false. |
-| PostProcessAA | ❌ | ✅ | ❌ | ? |
+| PostProcessAA | ❌ | ✅ | ❌ | Applies an antialiasing filter on the finished frame, instead of on each object draw, causing a smoother/blurrier result.  Cheaper performance, but worse looking result. |
 | Precache | ✅ | ✅ | ✅ | Controls texture precaching. Texture precaching may improve performance by initializing internal data structures for a number of world textures and most likely getting them loaded into video memory at level load time. It will also slow level loading down some. |
 | PureDevice | ✅ | ❌ | ❌ | Enables Direct3D "Pure Device" behaviour and passes many calls directly to the hardware.  Can give some performance benefits. |
 | ReduceBanding | ✅ | ✅ | ✅ | Attempts to reduce color banding by reconstructing lightmaps and fog maps.  |
 | RefreshRate | ✅ | ❌ | ✅ | Can be used to request a specific refresh rate when running full screen. If set to 0, a default refresh rate is used. If this value is set to an invalid or unsupported refresh rate based on video card or monitor capabilities, the renderer will fail to initialize. |
-| RenderThreads | ✅ | ✅ | ❌ | ? |
+| RenderThreads | ✅ | ✅ | ❌ | How many threads can queue up draw calls (0 is infinite).  Seemingly no actual performance benefits. |
 | S3TC | ✅ | ❌ | ✅ | Enables support for S3TC (Texture Compression).  When disabled, high resolution textures may look incorrect.  Requires restarting the game after changing the setting. |
-| ShareLists | ❌ | ❌ | ✅ | ? |
+| ShareLists | ❌ | ❌ | ✅ | Objects live in global memory rather than device memory.  There is some potential for erroneous cache invalidations.  Recommended to leave enabled. |
 | SingleCpuAffinity | ❌ | ✅ | ❌ | Enabling this restricts the renderer to only run on a single specific core. |
 | SinglePassDetail | ✅ | ❌ | ✅ | Enables single pass detail texture mode. This should generally be the highest performance detail texture mode. It requires 4 texture units. It also requires the UseDetailAlpha option to be enabled. |
 | SinglePassFog | ✅ | ❌ | ✅ | Enables single pass fog mode. This should generally be the highest performance fog mode. It requires 3 texture units. For the OpenGL renderer, it also requires support for either the GL_ATI_texture_env_combine3 extension or the GL_NV_texture_env_combine4 extension. |
-| SmoothMaskedTextures | ✅ | ❌ | ✅ | ? |
+| SmoothMaskedTextures | ✅ | ❌ | ✅ | Allow applying a smoothing algorithm to masked textures with an alpha.  Recommended to leave disabled, as it can cause an outline around transparent sections of textures. |
 | SoftwareVertexProcessing | ✅ | ❌ | ❌ | Enables software vertex processing. |
 | SurfaceBatching | ✅ | ❌ | ❌ | When enabled, handling of complex surfaces will be batched together. |
 | TexDXT1ToDXT3 | ✅ | ❌ | ✅ | A workaround for poor image quality on NVIDIA GeForce1 - GeForce4 series hardware when using DXT1 format S3TC compressed textures. If enabled, converts all DXT1 textures to DXT3 textures on upload. This improves image quality on the previously mentioned NVIDIA hardware at the expense of twice as much texture memory usage for these textures. The NVIDIA DXT1 image quality problems or most noticeable on certain skybox textures. Keep this in mind when deciding whether or not to trade image quality for speed here. This option should not be enabled on any hardware that draws DXT1 textures with the same quality as DXT3 textures of course. |
