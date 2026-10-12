@@ -79,6 +79,7 @@ void UD3D10RenderDevice::DrawComplexSurface(FSceneNode *Frame, FSurfaceInfo &Sur
 	    D3D::switchToShader(D3D::SHADER_COMPLEXSURFACE);
 	}
 
+
 	shader_ComplexSurface->setFlags(flags);
 
 	if (Surface.LightMap) {
