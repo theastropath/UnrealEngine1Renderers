@@ -49,6 +49,16 @@ void UD3D10RenderDevice::DrawComplexSurface(FSceneNode *Frame, FSurfaceInfo &Sur
 
 	//A replay wants gouraud.
 	flushDeferredGouraudPolygonsForFrame(Frame);
+	
+	if ((m_numDeferredGouraudPolys > 0) &&
+		(Surface.PolyFlags & (PF_Translucent | PF_Modulated | PF_Highlighted
+#ifdef UTGLR_RUNE_BUILD
+		| PF_AlphaBlend))) {
+#else
+		))) {
+#endif
+	    flushDeferredGouraudPolygonsNoCheck();
+	}
 
 	setSceneNodeIfChanged(Frame);
 

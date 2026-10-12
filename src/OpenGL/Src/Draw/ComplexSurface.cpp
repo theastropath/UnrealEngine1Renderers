@@ -15,6 +15,19 @@ void UOpenGLRenderDevice::DrawComplexSurface(FSceneNode *Frame, FSurfaceInfo &Su
 	EndDeferredGouraudPolysForFrame(Frame);
 
 	EndBuffering();
+	
+	const DWORD SurfaceRenderFlags =
+    	Surface.PolyFlags | GetOverridePolyFlags(Surface.Texture);
+
+	if (!m_HitData && (m_numDeferredGouraudPolys > 0) &&
+    	(SurfaceRenderFlags & (PF_Translucent | PF_Modulated | PF_Highlighted
+#ifdef UTGLR_RUNE_BUILD
+		| PF_AlphaBlend))) {
+#else
+		))) {
+#endif
+	    EndDeferredGouraudPolysNoCheck();
+	}
 
 	/*
 	There is no guarantee of scene setup before a node's first draw call and dimensions alone
