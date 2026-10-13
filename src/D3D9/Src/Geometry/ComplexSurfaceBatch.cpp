@@ -337,6 +337,15 @@ bool FASTCALL UD3D9RenderDevice::TryBatchComplexSurface(FSurfaceInfo &Surface, c
 	}
 
 	const DWORD PolyFlags = Surface.PolyFlags | GetOverridePolyFlags(Surface.Texture);
+	
+	if (PolyFlags & (PF_Translucent | PF_Modulated | PF_Highlighted
+#ifdef UTGLR_RUNE_BUILD
+		| PF_AlphaBlend)) {
+#else
+		)) {
+#endif
+		return false;
+	}
 
 	if (GIsEditor && (PolyFlags & (PF_Selected | PF_FlatShaded))) {
 		return false;
