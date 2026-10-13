@@ -67,18 +67,6 @@ void UD3D10RenderDevice::DrawComplexSurface(FSceneNode *Frame, FSurfaceInfo &Sur
 
 	flags = enginePolyFlags(Surface.PolyFlags);
 	flags |= diffuse->customPolyFlags;
-	
-	if ((numDeferredGouraudPolygons > 0) &&
-		(flags | PF_Modulated | PF_Highlighted
-#ifdef UTGLR_RUNE_BUILD
-		| PF_AlphaBlend)) {
-#else
-		)) {
-#endif
-	    flushDeferredGouraudPolygons();
-	    D3D::switchToShader(D3D::SHADER_COMPLEXSURFACE);
-	}
-
 
 	shader_ComplexSurface->setFlags(flags);
 

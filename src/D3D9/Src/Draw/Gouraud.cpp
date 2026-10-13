@@ -193,7 +193,7 @@ void UD3D9RenderDevice::DrawGouraudPolygon(FSceneNode *Frame, FTextureInfo &Info
 
 	//Blended geometry writes no depth, so it is held back and replayed after this run of models.
 	//A polygon too wide to hold falls through to the ordinary path.
-	if (IsBlendedGeometry(PolyFlags) && !m_replayingDeferredGouraudPolys) {
+	if ((Span == NULL) && IsBlendedGeometry(PolyFlags) && !m_replayingDeferredGouraudPolys) {
 		if (DeferGouraudPolygon(Frame, Info, Pts, NumPts, PolyFlags)) {
 			return;
 		}
@@ -409,7 +409,7 @@ void UD3D9RenderDevice::DrawTriangles(FSceneNode *Frame, FTextureInfo &Info, FTr
 		: NearZRangeHackFlag(PolyFlags);
 
 	//One triangle at a time from here, treated like any three-point polygon.
-	const bool holdBlended = IsBlendedGeometry(PolyFlags) && !m_replayingDeferredGouraudPolys;
+	const bool holdBlended = (Span == NULL) && IsBlendedGeometry(PolyFlags) && !m_replayingDeferredGouraudPolys;
 
 	for (INT i = 0; (i + 3) <= numIndices; i += 3) {
 		if (!IndexedTriangleInRange(Indices, i, NumPts)) {
