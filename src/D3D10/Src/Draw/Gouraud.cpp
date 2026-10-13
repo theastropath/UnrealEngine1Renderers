@@ -52,9 +52,11 @@ void UD3D10RenderDevice::DrawGouraudPolygon(FSceneNode *Frame, FTextureInfo &Inf
 	const float alpha = 1.0f;
 #endif
 
+	const bool immediateSpanModulated = (Span != nullptr) && ((flags & PF_Modulated) != 0);
+
 	//Blended geometry writes no depth, so it is held back and replayed after this run. One too wide
 	//for the store draws now and takes its chances.
-	if (isBlendedGeometry(flags)) {
+	if (isBlendedGeometry(flags) && !immediateSpanModulated) {
 		if (deferGouraudPolygon(Frame, Pts, NumPts, flags, Info.CacheID, diffuse.multU, diffuse.multV, alpha))
 			return;
 	}
@@ -125,8 +127,10 @@ void UD3D10RenderDevice::DrawTriangles(FSceneNode *Frame, FTextureInfo &Info, FT
 	const DWORD flags = enginePolyFlags(PolyFlags) | diffuse.customPolyFlags;
 	const float alpha = 1.0f;
 
+	const bool immediateSpanModulated = (Span != nullptr) && ((flags & PF_Modulated) != 0);
+
 	//A three-point fan.
-	if (isBlendedGeometry(flags)) {
+	if (isBlendedGeometry(flags) && !immediateSpanModulated) {
 		for (INT i = 0; (i + 3) <= numIndices; i += 3) {
 			if (!indexedTriangleInRange(Indices, i, NumPts))
 				continue;

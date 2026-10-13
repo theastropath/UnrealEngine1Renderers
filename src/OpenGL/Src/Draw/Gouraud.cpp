@@ -175,12 +175,14 @@ void UOpenGLRenderDevice::DrawGouraudPolygon(FSceneNode *Frame, FTextureInfo &In
 		return;
 	}
 
+	const bool immediateSpanModulated = (Span != NULL) && ((PolyFlags & PF_Modulated) != 0);
+
 	/*
 	Blended geometry writes no depth, so it is held back and replayed after this run of
 	models because an opaque model drawn afterwards would otherwise paint over it, and a
 	polygon too wide to hold falls through to the ordinary path and is drawn in place.
 	*/
-	if (IsBlendedGeometry(PolyFlags) && !m_replayingDeferredGouraudPolys) {
+	if (!immediateSpanModulated && IsBlendedGeometry(PolyFlags) && !m_replayingDeferredGouraudPolys) {
 		if (DeferGouraudPolygon(Frame, Info, Pts, NumPts, PolyFlags)) {
 			return;
 		}
@@ -378,7 +380,8 @@ void UOpenGLRenderDevice::DrawTriangles(FSceneNode *Frame, FTextureInfo &Info, F
 	//One triangle at a time from here.
 	//A translucent mesh sorts against itself more finely.
 	//Overflow only loses ordering.
-	const bool holdBlended = IsBlendedGeometry(PolyFlags) && !m_replayingDeferredGouraudPolys;
+	const bool immediateSpanModulated = (Span != NULL) && ((PolyFlags & PF_Modulated) != 0);
+	const bool holdBlended = !immediateSpanModulated && IsBlendedGeometry(PolyFlags) && !m_replayingDeferredGouraudPolys;
 
 	for (INT i = 0; (i + 3) <= numIndices; i += 3) {
 		if (!IndexedTriangleInRange(Indices, i, NumPts)) {
