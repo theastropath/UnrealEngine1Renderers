@@ -41,12 +41,28 @@
       <Configuration>Unreal Gold Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Unreal 227 Debug|Win32">
+      <Configuration>Unreal 227 Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Unreal 227 Release|Win32">
+      <Configuration>Unreal 227 Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Unreal Tournament Debug|Win32">
       <Configuration>Unreal Tournament Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Unreal Tournament Release|Win32">
       <Configuration>Unreal Tournament Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Unreal Tournament 469 Debug|Win32">
+      <Configuration>Unreal Tournament 469 Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Unreal Tournament 469 Release|Win32">
+      <Configuration>Unreal Tournament 469 Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="X-COM Enforcer Debug|Win32">
@@ -112,6 +128,24 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -222,6 +256,34 @@
     <Import Project="..\Render DLL.props" />
     <Import Project="..\d3d10.props" />
     <Import Project="..\unrealtournament.props" />
+    <Import Project="..\debug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Render DLL.props" />
+    <Import Project="..\d3d10.props" />
+    <Import Project="..\unrealtournament469.props" />
+    <Import Project="..\release.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Render DLL.props" />
+    <Import Project="..\d3d10.props" />
+    <Import Project="..\unrealtournament469.props" />
+    <Import Project="..\debug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Render DLL.props" />
+    <Import Project="..\d3d10.props" />
+    <Import Project="..\unreal227.props" />
+    <Import Project="..\release.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Render DLL.props" />
+    <Import Project="..\d3d10.props" />
+    <Import Project="..\unreal227.props" />
     <Import Project="..\debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='X-COM Enforcer Release|Win32'" Label="PropertySheets">
@@ -337,6 +399,10 @@
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Unreal 224 Release|Win32'">true</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Debug|Win32'">true</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Release|Win32'">true</GenerateManifest>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Debug|Win32'">true</GenerateManifest>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Release|Win32'">true</GenerateManifest>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Debug|Win32'">true</GenerateManifest>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Release|Win32'">true</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Rune Release|Win32'">true</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Rune Debug|Win32'">true</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Rune 1.00 Release|Win32'">true</GenerateManifest>
@@ -362,6 +428,10 @@
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Unreal 224 Release|Win32'">..\Shaders;$(IncludePath);$(DirectXSdkDir)Include</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Debug|Win32'">..\Shaders;$(IncludePath);$(DirectXSdkDir)Include</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Release|Win32'">..\Shaders;$(IncludePath);$(DirectXSdkDir)Include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Debug|Win32'">..\Shaders;$(IncludePath);$(DirectXSdkDir)Include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Release|Win32'">..\Shaders;$(IncludePath);$(DirectXSdkDir)Include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Debug|Win32'">..\Shaders;$(IncludePath);$(DirectXSdkDir)Include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Release|Win32'">..\Shaders;$(IncludePath);$(DirectXSdkDir)Include</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='X-COM Enforcer Debug|Win32'">..\Shaders;$(IncludePath);$(DirectXSdkDir)Include</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='X-COM Enforcer Release|Win32'">..\Shaders;$(IncludePath);$(DirectXSdkDir)Include</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Harry Potter Debug|Win32'">..\Shaders;$(IncludePath);$(DirectXSdkDir)Include</IncludePath>
@@ -381,6 +451,10 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Unreal 224 Release|Win32'">$(LibraryPath);$(DirectXSdkDir)Lib\x86</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Debug|Win32'">$(LibraryPath);$(DirectXSdkDir)Lib\x86</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Release|Win32'">$(LibraryPath);$(DirectXSdkDir)Lib\x86</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Debug|Win32'">$(LibraryPath);$(DirectXSdkDir)Lib\x86</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Release|Win32'">$(LibraryPath);$(DirectXSdkDir)Lib\x86</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Debug|Win32'">$(LibraryPath);$(DirectXSdkDir)Lib\x86</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Release|Win32'">$(LibraryPath);$(DirectXSdkDir)Lib\x86</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='X-COM Enforcer Debug|Win32'">$(LibraryPath);$(DirectXSdkDir)Lib\x86</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='X-COM Enforcer Release|Win32'">$(LibraryPath);$(DirectXSdkDir)Lib\x86</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Harry Potter Debug|Win32'">$(LibraryPath);$(DirectXSdkDir)Lib\x86</LibraryPath>
@@ -506,6 +580,60 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;D3D10DRV_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;D3D10DRV_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;D3D10DRV_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unreal 227 Release|Win32'">
+    <ClCompile>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;D3D10DRV_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>

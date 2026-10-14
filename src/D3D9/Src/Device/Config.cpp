@@ -357,10 +357,18 @@ void UD3D9RenderDevice::InitEngineFeatureFlagSafe(const TCHAR *pName, BITFIELD &
 		flag |= pProperty->BitMask;
 	}
 
+#if defined UTGLR_UNREAL_227_BUILD
+	//Unreal 227's FConfigCache::GetString takes FString&, not TCHAR*+Size.
+	FString configValue;
+	if (GConfig->GetString(g_pSection, pName, configValue)) {
+		return;
+	}
+#else
 	TCHAR configValue[80];
 	if (GConfig->GetString(g_pSection, pName, configValue, ARRAY_COUNT(configValue))) {
 		return;
 	}
+#endif
 
 	GConfig->SetBool(g_pSection, pName, 1);
 

@@ -2,7 +2,7 @@
 rem =============================================================================
 rem  gamedefs.bat: which game SDKs there are, and what each one asks of the build.
 rem
-rem  Shared by the D3D9 and OpenGL renderers, which target the same ten games.
+rem  Shared by the D3D9 and OpenGL renderers, which target the same eleven games.
 rem
 rem  Usage, from a renderer's build script:
 rem      call "..\Shared\gamedefs.bat"          sets ALL_GAMES and nothing else
@@ -23,7 +23,7 @@ rem ============================================================================
 
 rem Every game with an SDK these renderers know how to target. This is the order the
 rem table below tries, and the order a "build all" walks.
-set "ALL_GAMES=UnrealTournament XComEnforcer DeusEx Rune Rune_100 Unreal_226_Gold Unreal_224 Nerf HarryPotter Klingon"
+set "ALL_GAMES=UnrealTournament UnrealTournament_469 XComEnforcer DeusEx Rune Rune_100 Unreal_226_Gold Unreal_224 Unreal_227 Nerf HarryPotter Klingon"
 
 if "%~1"=="" exit /b 0
 
@@ -38,9 +38,6 @@ rem
 rem Unreal_226_Gold builds under UTGLR_UNREAL_226_BUILD, which buildconfig.h folds into
 rem the UTGLR_OLD_URENDERDEVICE umbrella: no URenderDevice::DetailTextures, a Flush with
 rem no argument, and no GUglyHackFlags - so ZRangeHack is not offered there.
-rem UTGLR_UNREAL_227_BUILD would not have fitted, wanting 227 features 226 lacks
-rem (PF_AlphaBlend, FTextureInfo::UClampMode). No Unreal 227 SDK ships under Games\ in
-rem any case; buildconfig.h accepts that define only for a fork built against one.
 rem
 rem Nerf is engine 300 and the same generation, but gets UTGLR_NERF_BUILD of its own even
 rem though no code here tells the two apart. Its
@@ -80,13 +77,15 @@ rem
 rem For what a define then selects inside a renderer, see that renderer's main header -
 rem D3D9\Src\D3D9.h or OpenGL\Src\OpenGL.h - and Shared\buildconfig.h.
 set "GAMEDEF="
-if /i "%~1"=="UnrealTournament" set "GAMEDEF=UTGLR_UT_BUILD"
+if /i "%~1"=="UnrealTournament"     set "GAMEDEF=UTGLR_UT_BUILD"
+if /i "%~1"=="UnrealTournament_469" set "GAMEDEF=UTGLR_UT_469_BUILD"
 if /i "%~1"=="XComEnforcer"     set "GAMEDEF=UTGLR_UT_BUILD"
 if /i "%~1"=="DeusEx"           set "GAMEDEF=UTGLR_DX_BUILD"
 if /i "%~1"=="Rune"             set "GAMEDEF=UTGLR_RUNE_BUILD"
 if /i "%~1"=="Rune_100"         set "GAMEDEF=UTGLR_RUNE_BUILD"
 if /i "%~1"=="Unreal_226_Gold"  set "GAMEDEF=UTGLR_UNREAL_226_BUILD"
 if /i "%~1"=="Unreal_224"       set "GAMEDEF=UTGLR_UNREAL_224_BUILD"
+if /i "%~1"=="Unreal_227"       set "GAMEDEF=UTGLR_UNREAL_227_BUILD"
 if /i "%~1"=="Nerf"             set "GAMEDEF=UTGLR_NERF_BUILD"
 if /i "%~1"=="HarryPotter"      set "GAMEDEF=UTGLR_HP_BUILD"
 if /i "%~1"=="Klingon"          set "GAMEDEF=UTGLR_KLINGON_BUILD"

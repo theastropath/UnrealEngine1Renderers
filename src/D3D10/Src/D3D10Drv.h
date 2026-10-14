@@ -20,9 +20,10 @@ Engines older than Unreal Tournament's, oldest last:
 /*
 Unreal Tournament's generation: UT, X-COM Enforcer and Harry Potter, the last with a submission
 interface of its own. They share the four-argument DECLARE_CLASS and the FTime overload of
-UTexture::Lock, as does Rune, kept apart here for its fog.
+UTexture::Lock, as does Rune, kept apart here for its fog. OldUnreal replaces
+UTexture::Lock -> UTexture::GetTexture.
 */
-#if (UNREALTOURNAMENT || HARRYPOTTER)
+#if (UNREALTOURNAMENT || UNREALTOURNAMENT_469 || HARRYPOTTER || UNREAL_227)
 #define UT_URENDERDEVICE 1
 #else
 #define UT_URENDERDEVICE 0
@@ -31,9 +32,10 @@ UTexture::Lock, as does Rune, kept apart here for its fog.
 /*
 Highest ETextureFormat the build's SDK declares, bounding the array it may index, and Nerf's enum runs
 past RGBA8 with a TEXF_DXT5 undeclared everywhere else, which is why the bound is a macro and never
-a plain constant of the enum's own type.
+a plain constant of the enum's own type. OldUnreal renames the compressed formats (TEXF_DXT3 is
+TEXF_BC2, TEXF_DXT5 is TEXF_BC3) and reorders the enum.
 */
-#if NERF
+#if (NERF || UNREAL_227 || UNREALTOURNAMENT_469)
 #define HIGHEST_SUPPORTED_TEXF TEXF_DXT5
 #else
 #define HIGHEST_SUPPORTED_TEXF TEXF_RGBA8

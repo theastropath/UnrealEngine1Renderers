@@ -41,7 +41,7 @@ void UOpenGLRenderDevice::SetBlendNoCheck(DWORD blendFlags) {
 
 #ifdef UTGLR_RUNE_BUILD
 	const DWORD GL_BLEND_FLAG_BITS = PF_Translucent | PF_Modulated | PF_Highlighted | PF_AlphaBlend;
-#elif defined(UTGLR_UNREAL_227_BUILD)
+#elif defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 	const DWORD GL_BLEND_FLAG_BITS = PF_Translucent | PF_Modulated | PF_Highlighted | PF_AlphaBlend;
 #else
 	const DWORD GL_BLEND_FLAG_BITS = PF_Translucent | PF_Modulated | PF_Highlighted;
@@ -65,7 +65,7 @@ void UOpenGLRenderDevice::SetBlendNoCheck(DWORD blendFlags) {
 			else if (blendFlags & PF_AlphaBlend) {
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			}
-#elif defined(UTGLR_UNREAL_227_BUILD)
+#elif defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 			else if (blendFlags & PF_AlphaBlend) {
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			}
@@ -75,13 +75,13 @@ void UOpenGLRenderDevice::SetBlendNoCheck(DWORD blendFlags) {
 			}
 		}
 	}
-#ifdef UTGLR_UNREAL_227_BUILD
+#if defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 	if (Xor & (PF_Masked | PF_AlphaBlend)) {
 #else
 	if (Xor & PF_Masked) {
 #endif
 		if (blendFlags & PF_Masked) {
-#ifdef UTGLR_UNREAL_227_BUILD
+#if defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 			glAlphaFunc(GL_GREATER, 0.5f);
 			glEnable(GL_ALPHA_TEST);
 			if (m_useAlphaToCoverageForMasked) {

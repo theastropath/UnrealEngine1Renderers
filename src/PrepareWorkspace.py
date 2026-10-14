@@ -121,6 +121,32 @@ def ExtractHeaders(tmpdir,gamesdir,patchdir,headers):
             shutil.copytree(headersdir/'XComEnforcer',gamesdir/'XComEnforcer',dirs_exist_ok=True)
             extracted.append("XComEnforcer")
 
+    #Unreal 227 has the headers mixed in with the source files, unmangle
+    if (headers["Unreal_227"]==False):
+        if ExtractZip(tmpdir/'unreal227.zip', headersdir/'Unreal_227'):
+            shutil.copytree(headersdir/'Unreal_227'/'Core',gamesdir/'Unreal_227'/'Core',dirs_exist_ok=True)
+            shutil.copytree(headersdir/'Unreal_227'/'Engine',gamesdir/'Unreal_227'/'Engine',dirs_exist_ok=True)
+            #Promote the x86 libs to where the other SDKs keep them.
+            for pkg in ('Core','Engine'):
+                srclib = headersdir/'Unreal_227'/pkg/'Lib'/'x86'/((pkg+'.lib'))
+                dstlib = gamesdir/'Unreal_227'/pkg/'Lib'/((pkg+'.lib'))
+                if srclib.exists():
+                    shutil.copy2(srclib,dstlib)
+            extracted.append("Unreal_227")
+
+    #Unreal Tournament 469 has the headers mixed in with the source files, unmangle
+    if (headers["UnrealTournament_469"]==False):
+        if ExtractZip(tmpdir/'ut469sdk.zip', headersdir/'UnrealTournament_469'):
+            shutil.copytree(headersdir/'UnrealTournament_469'/'Core',gamesdir/'UnrealTournament_469'/'Core',dirs_exist_ok=True)
+            shutil.copytree(headersdir/'UnrealTournament_469'/'Engine',gamesdir/'UnrealTournament_469'/'Engine',dirs_exist_ok=True)
+            #Promote the x86 libs to where the other SDKs keep them.
+            for pkg in ('Core','Engine'):
+                srclib = headersdir/'UnrealTournament_469'/pkg/'Lib'/'x86'/((pkg+'.lib'))
+                dstlib = gamesdir/'UnrealTournament_469'/pkg/'Lib'/((pkg+'.lib'))
+                if srclib.exists():
+                    shutil.copy2(srclib,dstlib)
+            extracted.append("UnrealTournament_469")
+
     if (headersdir.exists()):
         shutil.rmtree(headersdir)
 
@@ -159,7 +185,7 @@ patchdir = base/'HeaderPatches'
 dxsdkdir = base/'dxsdk-jun2010'
 patchdir = base/'HeaderPatches'
 
-targets=["UnrealTournament","XComEnforcer","DeusEx","Rune","Rune_100","Unreal_226_Gold","Unreal_224","Nerf","HarryPotter","Klingon"]
+targets=["UnrealTournament","UnrealTournament_469","XComEnforcer","DeusEx","Rune","Rune_100","Unreal_226_Gold","Unreal_224","Unreal_227","Nerf","HarryPotter","Klingon"]
 headers={}
 for target in targets:
     headers[target]=CheckHeaderExistence(headerdir,target)
@@ -188,6 +214,12 @@ if (headers["HarryPotter"]==False):
 
 if (headers["XComEnforcer"]==False):
     downloads["https://coding.hanfling.de/launch/nonofficial/XComEnforcerPubSrc10_20161002.zip"]="xcom.zip" #XComEnforcer
+
+if (headers["Unreal_227"]==False):
+    downloads["https://github.com/OldUnreal/Unreal-testing/releases/download/v227k_15/OldUnreal-UnrealPatch227k-SDK-Windows.zip"]="unreal227.zip" #Unreal 227
+
+if (headers["UnrealTournament_469"]==False):
+    downloads["https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469f-rc5/OldUnreal-UTPatch469f-SDK-Windows.zip"]="ut469sdk.zip" #Unreal Tournament 469
 
 #Check if extracted DirectX SDK already exists
 if (headers["dxsdk"]==False):

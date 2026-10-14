@@ -86,7 +86,11 @@ void UD3D10RenderDevice::GetStats(TCHAR *Result) {
 Screenshots and previews.
 \param Pixels 32 bit, from the back buffer.
 */
-void UD3D10RenderDevice::ReadPixels(FColor *Pixels) {
+void UD3D10RenderDevice::ReadPixels(FColor *Pixels
+#if UNREAL_227
+	, UBOOL bGammaCorrectOutput
+#endif
+) {
 	makeContextCurrent();
 	if (!Pixels || !URenderDevice::Viewport)
 		return;

@@ -12,13 +12,15 @@
 #ifdef UTGLR_UT_BUILD
 #define UTGLR_VALID_BUILD_CONFIG 1
 #endif
+#ifdef UTGLR_UT_469_BUILD
+#define UTGLR_VALID_BUILD_CONFIG 1
+#endif
 #ifdef UTGLR_DX_BUILD
 #define UTGLR_VALID_BUILD_CONFIG 1
 #endif
 #ifdef UTGLR_RUNE_BUILD
 #define UTGLR_VALID_BUILD_CONFIG 1
 #endif
-//XXX: untested. No SDK here builds Unreal 227; kept for a fork with one.
 #ifdef UTGLR_UNREAL_227_BUILD
 #define UTGLR_VALID_BUILD_CONFIG 1
 #endif
@@ -51,8 +53,20 @@
 
 //Format enums carrying TEXF_DXT3/TEXF_DXT5. The source switch still dispatches on the
 //texture's own format; an unrecognised one reads as 32 bit colour and overruns the mip.
-#if defined UTGLR_UNREAL_227_BUILD || defined UTGLR_NERF_BUILD
+#if defined UTGLR_UNREAL_227_BUILD || defined UTGLR_NERF_BUILD || defined UTGLR_UT_469_BUILD
 #define UTGLR_HAS_DXT3_DXT5 1
+#endif
+
+//OldUnreal renamed the clock(Timer)/unclock(Timer) macros to clockFast/unclockFast
+//(and clockSlow/unclockSlow). The D3D9 and OpenGL renderers still use the old names, so define
+//them here as aliases for the Fast variants.
+#if defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
+	#ifndef clock
+		#define clock(Timer)   {Timer -= appCycles();}
+	#endif
+	#ifndef unclock
+		#define unclock(Timer) {Timer += appCycles()-34;}
+	#endif
 #endif
 
 /*

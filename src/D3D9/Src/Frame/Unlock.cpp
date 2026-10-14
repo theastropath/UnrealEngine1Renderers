@@ -83,7 +83,7 @@ void UD3D9RenderDevice::Unlock(UBOOL Blit) {
 
 	if (FrameRateLimit >= 20) {
 		//DOUBLE to match the timestamp.
-#if defined UTGLR_DX_BUILD || defined UTGLR_RUNE_BUILD || defined UTGLR_OLD_URENDERDEVICE || defined UTGLR_UNREAL_227_BUILD
+#if defined UTGLR_DX_BUILD || defined UTGLR_RUNE_BUILD || defined UTGLR_OLD_URENDERDEVICE
 		DOUBLE curFrameTimestamp;
 		DOUBLE spinTimestamp;
 #else

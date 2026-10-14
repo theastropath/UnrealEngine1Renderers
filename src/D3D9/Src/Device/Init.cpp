@@ -201,7 +201,12 @@ UBOOL UD3D9RenderDevice::Init(UViewport *InViewport, INT NewX, INT NewY, INT New
 	check(m_hDC);
 
 	if (!SetRes(NewX, NewY, NewColorBytes, Fullscreen)) {
+#if defined UTGLR_UNREAL_227_BUILD
+		//Unreal 227's LocalizeError returns FString, not const TCHAR*.
+		return FailedInitf(*LocalizeError("ResFailed"));
+#else
 		return FailedInitf(LocalizeError("ResFailed"));
+#endif
 	}
 
 	return 1;

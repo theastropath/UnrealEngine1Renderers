@@ -216,7 +216,12 @@ UBOOL UOpenGLRenderDevice::Init(UViewport *InViewport, INT NewX, INT NewY, INT N
 
 		hModuleGlMain = LoadLibraryA(GL_DLL);
 		if (!hModuleGlMain) {
+#if defined UTGLR_UNREAL_227_BUILD
+			//Unreal 227's LocalizeError returns FString, not const TCHAR*.
+			debugf(NAME_Init, *LocalizeError("NoFindGL"), appFromAnsi(GL_DLL));
+#else
 			debugf(NAME_Init, LocalizeError("NoFindGL"), appFromAnsi(GL_DLL));
+#endif
 			//Not counted on failure.
 			m_isUncountedDevice = true;
 			return 0;
@@ -277,7 +282,12 @@ UBOOL UOpenGLRenderDevice::Init(UViewport *InViewport, INT NewX, INT NewY, INT N
 #endif
 
 	if (!SetRes(NewX, NewY, NewColorBytes, Fullscreen)) {
+#if defined UTGLR_UNREAL_227_BUILD
+		//Unreal 227's LocalizeError returns FString, not const TCHAR*.
+		return FailedInitf(*LocalizeError("ResFailed"));
+#else
 		return FailedInitf(LocalizeError("ResFailed"));
+#endif
 	}
 
 	return 1;

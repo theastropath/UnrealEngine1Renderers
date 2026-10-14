@@ -83,7 +83,7 @@ def BuildD3D10(filepath, targets):
     fail = []
     print(buildscript)
 
-    targetcmds={"DeusEx":"Deus Ex Release", "HarryPotter":"Harry Potter Release","Nerf":"Nerf Arena Blast Release","Klingon":"Klingon Release","Rune_100":"Rune 1.00 Release", "Rune":"Rune Release", "Unreal_224":"Unreal 224 Release", "Unreal_226_Gold":"Unreal Gold Release", "UnrealTournament":"Unreal Tournament Release", "XComEnforcer":"X-COM Enforcer Release"}
+    targetcmds={"DeusEx":"Deus Ex Release", "HarryPotter":"Harry Potter Release","Nerf":"Nerf Arena Blast Release","Klingon":"Klingon Release", "Rune_100":"Rune 1.00 Release", "Rune":"Rune Release", "Unreal_224":"Unreal 224 Release", "Unreal_226_Gold":"Unreal Gold Release", "Unreal_227":"Unreal 227 Release", "UnrealTournament":"Unreal Tournament Release", "UnrealTournament_469":"Unreal Tournament 469 Release", "XComEnforcer":"X-COM Enforcer Release"}
     for target in targets:
         print(target)
         targetcmd = targetcmds[target]
@@ -189,7 +189,7 @@ def CollectBuildResults(basedir, targets):
 #region Run Build
 
 #All valid targets
-alltargets=["UnrealTournament","XComEnforcer","DeusEx","Rune","Rune_100","Unreal_226_Gold","Unreal_224","Nerf","HarryPotter","Klingon"]
+alltargets=["UnrealTournament","UnrealTournament_469","XComEnforcer","DeusEx","Rune","Rune_100","Unreal_226_Gold","Unreal_224","Unreal_227","Nerf","HarryPotter","Klingon"]
 
 targets = []
 if (len(sys.argv)>1):

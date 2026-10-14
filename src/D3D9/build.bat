@@ -131,6 +131,11 @@ rem UseSSE2 ini options gate the hand written intrinsic paths only, and cannot p
 rem CPU from ordinary compiled float code.
 set "CFLAGS=/nologo /c /W3 /EHa /Zp4 /GS- /fp:fast /Zc:wchar_t- /std:c++14 /O2 /GL /GF /Gy /MT"
 
+rem Unreal 227's Core defines UNICHAR as wchar_t and adds an FArchive operator<<(TCHAR)
+rem that collides with operator<<(_WORD) when /Zc:wchar_t- makes wchar_t a typedef for
+rem unsigned short. Build with wchar_t as a distinct type so TCHAR != _WORD.
+if /i "%GAME%"=="Unreal_227" set "CFLAGS=%CFLAGS:/Zc:wchar_t-=% /Zc:wchar_t"
+
 rem Harry Potter is the only tree needing a compiler flag to get its headers through.
 rem Shared\gamedefs.bat holds those, with which diagnostics and why, because the OpenGL
 rem build needs the same two for the same headers. Empty for every other game, hence the

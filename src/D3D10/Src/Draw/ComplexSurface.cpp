@@ -127,6 +127,20 @@ void UD3D10RenderDevice::DrawComplexSurface(FSceneNode *Frame, FSurfaceInfo &Sur
 			return;
 		shader_ComplexSurface->switchPass(TextureCache::PASS_BUMP, 1);
 	}
+#elif UNREAL_227
+	//Unreal 227 replaces Lock/Unlock with a singular GetTexture, no need for release
+	else if (Surface.Texture->Texture && Surface.Texture->Texture->BumpMap) {
+		FTextureInfo *texInfo = Surface.Texture->Texture->BumpMap->GetTexture(0, this);
+		if (texInfo) {
+			TextureCache::CachedTexture *entry = precacheLayer(*this, *textureCache, *texInfo, 0, false);
+			const bool bound = textureCache->setTexture(shader_ComplexSurface, TextureCache::PASS_BUMP, texInfo->CacheID, entry) != nullptr;
+			if (!bound)
+				return;
+			shader_ComplexSurface->switchPass(TextureCache::PASS_BUMP, 1);
+		} else {
+			shader_ComplexSurface->switchPass(TextureCache::PASS_BUMP, 0);
+		}
+	}
 #else
 	//The inner UTexture* is optional.
 	else if (Surface.Texture->Texture && Surface.Texture->Texture->BumpMap) {

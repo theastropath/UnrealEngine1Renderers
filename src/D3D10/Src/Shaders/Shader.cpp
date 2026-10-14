@@ -466,7 +466,7 @@ void Shader::setFlags(DWORD flags) {
 		blendState = states.bstate_Modulate;
 	} else if (flags & PF_Highlighted) {
 		blendState = states.bstate_Highlight;
-	} else if (flags & PF_AlphaBlend) {
+	} else if (flags & SHADER_PF_ALPHABLEND) {
 		blendState = states.bstate_Alpha;
 	} else if (flags & PF_Masked) {
 		blendState = states.bstate_Masked;

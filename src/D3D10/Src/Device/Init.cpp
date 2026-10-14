@@ -302,7 +302,7 @@ UBOOL UD3D10RenderDevice::SetRes(INT NewX, INT NewY, INT NewColorBytes, UBOOL Fu
 //Reapplied at frame start.
 #if (RUNE || DEUSEX)
 	int defaultFOV = 75;
-#elif (UNREALGOLD || UNREAL_224 || UNREALTOURNAMENT || NERF || HARRYPOTTER || KLINGON)
+#elif (UNREALGOLD || UNREAL_224 || UNREALTOURNAMENT || UNREALTOURNAMENT_469 || UNREAL_227 || NERF || HARRYPOTTER || KLINGON)
 	int defaultFOV = 90;
 #else
 	int defaultFOV = 90; //No game macro defined.
