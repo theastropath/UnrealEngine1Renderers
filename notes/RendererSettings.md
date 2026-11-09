@@ -17,7 +17,7 @@ This page should explain all of the settings available in the renderers.
 | AutoFOV | ❌ | ✅ | ❌ | Automatically sets the field of view depending on the window/screen size. Might want to turn this off if you want to set an extra-wide FOV for multiplayer games. Valid settings: true/false. Default: true. |
 | BGRATextures | ❌ | ❌ | ✅ | Allows textures to be uploaded in BGRA format rather than RGBA if the GL_EXT_bgra extension is supported. |
 | BufferTileQuads | ❌ | ❌ | ✅ | Enables buffering in the DrawTile path, which may improve text rendering performance. |
-| BumpMapping | ❌ | ✅ | ❌ | Can be ignored unless you've got special textures installed. Attempts to fake bump mapping if textures have normal maps present. Requires a normal map to be either present in the texture's bump map slot, or provided as an extra external texture. Valid settings: true/false. Default: false. |
+| BumpMapping | ❌ | ✅ | ❌ | Controls whether or not external bump map DDS files are used.  Can be ignored unless you've got special textures installed.  Valid settings: true/false. Default: false. |
 | CacheStaticMaps | ✅ | ❌ | ✅ | Keep a lightmaps upload rather than re-converting it whenever a surface is drawn again. |
 | ClassicLighting | ❌ | ✅ | ❌ | With this enabled, the lighting matches that of the original renderers. When disabled, HDR is used (in which case reverting to classic lighting improves performance). Valid settings: true/false. Default: true. |
 | ClipboardScreenshots | ❌ | ✅ | ❌ | Screenshots taken using the in-game screenshot key (Rather than PrintScreen) will be copied to the clipboard as well. |
