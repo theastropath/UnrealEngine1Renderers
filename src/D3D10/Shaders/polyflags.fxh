@@ -23,7 +23,9 @@ Shared with the C++ side (polyflags.h).
 #define 	PF_NoSmooth			 0x00000800	/**< Unfiltered. */
 #define 	PF_BigWavy 			 0x00001000	/**< Big wavy pattern. */
 #define 	PF_SpecialPoly		 0x00001000	/**< Reuses BigWavy. */
+#ifndef PF_AlphaBlend
 #define		PF_AlphaBlend		 0x00001000	/**< RUNE only. */
+#endif
 #define 	PF_SmallWavy		 0x00002000	/**< Small wavy pattern. */
 #define 	PF_Flat				 0x00004000	/**< Flat surface. */
 #define 	PF_LowShadowDetail	 0x00008000	/**< Low detail shadows. */
@@ -54,7 +56,9 @@ Shared with the C++ side (polyflags.h).
 #define 	PF_RenderHint        0x01000000   /**< Rendering hint. */
 
 //Combinations. Parenthesised, or `x & PF_NoOcclude` binds wrong.
+#ifndef PF_NoOcclude
 #define 	PF_NoOcclude		 (PF_Masked | PF_Translucent | PF_Invisible | PF_Modulated)
+#endif
 #define 	PF_NoEdit			 (PF_Memorized | PF_Selected | PF_EdProcessed | PF_NoMerge | PF_EdCut)
 #define 	PF_NoImport			 (PF_NoEdit | PF_NoMerge | PF_Memorized | PF_Selected | PF_EdProcessed | PF_EdCut)
 #define 	PF_AddLast			 (PF_Semisolid | PF_NotSolid)

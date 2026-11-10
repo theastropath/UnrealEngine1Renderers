@@ -92,7 +92,11 @@ void UD3D9RenderDevice::PopHit(INT Count, UBOOL bForce) {
 }
 
 
-void UD3D9RenderDevice::ReadPixels(FColor *Pixels) {
+void UD3D9RenderDevice::ReadPixels(FColor *Pixels
+#if UTGLR_UNREAL_227_BUILD
+	, UBOOL bGammaCorrectOutput
+#endif
+) {
 	guard(UD3D9RenderDevice::ReadPixels);
 
 	//Drained in the order every other sync point uses:

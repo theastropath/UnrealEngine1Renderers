@@ -67,7 +67,11 @@ void UOpenGLRenderDevice::PopHit(INT Count, UBOOL bForce) {
 }
 
 
-void UOpenGLRenderDevice::ReadPixels(FColor *Pixels) {
+void UOpenGLRenderDevice::ReadPixels(FColor *Pixels
+#if UTGLR_UNREAL_227_BUILD
+	, UBOOL bGammaCorrectOutput
+#endif
+) {
 	guard(UOpenGLRenderDevice::ReadPixels);
 
 	INT x, y;

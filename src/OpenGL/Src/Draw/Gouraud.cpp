@@ -76,7 +76,7 @@ void UOpenGLRenderDevice::DrawGouraudPolygonOld(FSceneNode *Frame, FTextureInfo 
 
 #ifdef UTGLR_RUNE_BUILD
 	if ((PolyFlags & (PF_RenderFog | PF_Translucent | PF_Modulated | PF_AlphaBlend)) == PF_RenderFog) {
-#elif defined(UTGLR_UNREAL_227_BUILD)
+#elif defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 	if ((PolyFlags & (PF_RenderFog | PF_Translucent | PF_Modulated | PF_AlphaBlend)) == PF_RenderFog) {
 #else
 	if ((PolyFlags & (PF_RenderFog | PF_Translucent | PF_Modulated)) == PF_RenderFog) {
@@ -259,7 +259,7 @@ void UOpenGLRenderDevice::OpenGouraudPolygonBatch(FTextureInfo &Info, DWORD Poly
 
 #ifdef UTGLR_RUNE_BUILD
 			if (((PolyFlags & (PF_RenderFog | PF_Translucent | PF_Modulated | PF_AlphaBlend)) == PF_RenderFog) && UseVertexSpecular) {
-#elif defined(UTGLR_UNREAL_227_BUILD)
+#elif defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 			if (((PolyFlags & (PF_RenderFog | PF_Translucent | PF_Modulated | PF_AlphaBlend)) == PF_RenderFog) && UseVertexSpecular) {
 #else
 			if (((PolyFlags & (PF_RenderFog | PF_Translucent | PF_Modulated)) == PF_RenderFog) && UseVertexSpecular) {

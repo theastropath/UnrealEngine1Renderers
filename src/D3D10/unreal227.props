@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Untracked per-machine game locations; see local.props.example. -->
+  <Import Project="$(MSBuildThisFileDirectory)local.props" Condition="Exists('$(MSBuildThisFileDirectory)local.props')" />
+  <PropertyGroup Label="UserMacros">
+    <GAMENAME>Unreal_227</GAMENAME>
+    <GAMEDIR>$(GAMEDIR_UNREAL_227)</GAMEDIR>
+    <GAMEEXE>Unreal.exe</GAMEEXE>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>UNREAL_227;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!--
+      Unreal 227's Core defines UNICHAR as wchar_t and adds an FArchive operator<<(TCHAR)
+      that collides with operator<<(_WORD) when /Zc:wchar_t- makes wchar_t a typedef for
+      unsigned short. Build with wchar_t as a distinct type so TCHAR != _WORD.
+      -->
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="GAMENAME">
+      <Value>$(GAMENAME)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEEXE">
+      <Value>$(GAMEEXE)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEDIR">
+      <Value>$(GAMEDIR)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

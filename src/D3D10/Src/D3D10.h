@@ -264,7 +264,11 @@ public:
 	void PushHit(const BYTE *Data, INT Count);
 	void PopHit(INT Count, UBOOL bForce);
 	void GetStats(TCHAR *Result);
-	void ReadPixels(FColor *Pixels);
+	void ReadPixels(FColor *Pixels
+#if UNREAL_227
+		, UBOOL bGammaCorrectOutput
+#endif
+	);
 	//@}
 
 	/**@name Optional but implemented*/

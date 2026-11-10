@@ -71,6 +71,20 @@
     <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Debug|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Debug|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Release|Win32'">
+    <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament 469 Release|Win32'">
+    <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nerf Debug|Win32'">
     <LocalDebuggerCommand>$(GAMEDIR)\system\$(GAMEEXE)</LocalDebuggerCommand>
     <LocalDebuggerWorkingDirectory>$(GAMEDIR)\system</LocalDebuggerWorkingDirectory>

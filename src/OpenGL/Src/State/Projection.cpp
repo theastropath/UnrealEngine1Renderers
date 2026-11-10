@@ -38,7 +38,7 @@ void UOpenGLRenderDevice::SetProjectionStateNoCheck(bool requestNearZRangeHackPr
 	top = +m_Aspect * m_RProjZ * zNearVal;
 	zNear = 1.0f * zNearVal;
 
-#ifdef UTGLR_UNREAL_227_BUILD
+#if defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 	zFar = 49152.0f;
 #else
 	zFar = 32768.0f;

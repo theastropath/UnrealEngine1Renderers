@@ -10,20 +10,58 @@
 #include "ddsfile.h"
 
 /**
-Indexed by texture format. Rows stay contiguous and in enum order.
+Per engine format. Unreal 227 renames TEXF_DXT3 to TEXF_BC2 and
+TEXF_DXT5 to TEXF_BC3 shifting both slots.
 \note Row 1 keeps its channels; the shader expands them. See BGRA7_EXPAND.
 */
-TexConverter::TextureFormat TexConverter::formats[] = {
-	{ true, 0, 0, false, DXGI_FORMAT_R8G8B8A8_UNORM, &TexConverter::fromPaletted }, /**< TEXF_P8 = 0x00 */
-	{ true, 0, 0, true, DXGI_FORMAT_R8G8B8A8_UNORM, nullptr }, /**< TEXF_RGBA7	= 0x01. See the note above */
-	{ false, 0, 0, true, DXGI_FORMAT_R8G8B8A8_UNORM, nullptr }, /**< TEXF_RGB16	= 0x02 */
-	{ true, 4, 8, true, DXGI_FORMAT_BC1_UNORM, nullptr }, /**< TEXF_DXT1 = 0x03 */
-	{ false, 0, 0, true, DXGI_FORMAT_UNKNOWN, nullptr }, /**< TEXF_RGB8 = 0x04 */
-	{ true, 0, 0, true, DXGI_FORMAT_R8G8B8A8_UNORM, nullptr }, /**< TEXF_RGBA8	= 0x05 */
-	{ false, 0, 0, true, DXGI_FORMAT_UNKNOWN, nullptr }, /**< TEXF_NODATA = 0x06. Nothing to upload */
-	{ true, 4, 16, true, DXGI_FORMAT_BC2_UNORM, nullptr }, /**< TEXF_DXT3 = 0x07. 16 bytes a block */
-	{ true, 4, 16, true, DXGI_FORMAT_BC3_UNORM, nullptr }, /**< TEXF_DXT5 = 0x08 */
-};
+const TexConverter::TextureFormat &TexConverter::getFormat(BYTE format) {
+	static const TextureFormat unsupported = { false, 0, 0, true, DXGI_FORMAT_UNKNOWN, nullptr };
+	switch (format) {
+		case TEXF_P8:
+		{
+			static const TextureFormat f = { true, 0, 0, false, DXGI_FORMAT_R8G8B8A8_UNORM, &TexConverter::fromPaletted };
+			return f;
+		}
+		case TEXF_RGBA7:
+		{
+			static const TextureFormat f = { true, 0, 0, true, DXGI_FORMAT_R8G8B8A8_UNORM, nullptr };
+			return f;
+		}
+		case TEXF_DXT1:
+		{
+			static const TextureFormat f = { true, 4, 8, true, DXGI_FORMAT_BC1_UNORM, nullptr };
+			return f;
+		}
+		case TEXF_RGB8:
+		{
+			static const TextureFormat f = { false, 0, 0, true, DXGI_FORMAT_UNKNOWN, nullptr };
+			return f;
+		}
+#if (UNREAL_227 || UNREALTOURNAMENT_469)
+		case TEXF_BGRA8:
+#else
+		case TEXF_RGBA8:
+#endif
+		{
+			static const TextureFormat f = { true, 0, 0, true, DXGI_FORMAT_R8G8B8A8_UNORM, nullptr };
+			return f;
+		}
+#if (NERF || UNREAL_227 || UNREALTOURNAMENT_469)
+		case TEXF_DXT3:
+		{
+			static const TextureFormat f = { true, 4, 16, true, DXGI_FORMAT_BC2_UNORM, nullptr };
+			return f;
+		}
+		case TEXF_DXT5:
+		{
+			static const TextureFormat f = { true, 4, 16, true, DXGI_FORMAT_BC3_UNORM, nullptr };
+			return f;
+		}
+#endif
+		default:
+			return unsupported;
+	}
+}
 
 /** \param Info The first mip must be present. */
 static bool usableDimensions(const FTextureInfo &Info) {
@@ -265,7 +303,7 @@ void TexConverter::convertAndCache(FTextureInfo &Info, DWORD PolyFlags) const {
 		return;
 	}
 
-	TextureFormat &format = formats[Info.Format];
+	const TextureFormat &format = getFormat(Info.Format);
 	if (format.supported == false) {
 		conversionFailed(Info, "Unsupported texture type.");
 		return;
@@ -408,7 +446,7 @@ bool TexConverter::lightmapSource(FTextureInfo &Info, const void *&rows, UINT &p
 	if (Info.Format > HIGHEST_SUPPORTED_TEXF)
 		return false;
 
-	const TextureFormat &format = formats[Info.Format];
+	const TextureFormat &format = getFormat(Info.Format);
 
 	if (!format.supported || !format.directAssign || format.blocksize > 0 || format.d3dFormat != DXGI_FORMAT_R8G8B8A8_UNORM)
 		return false;
@@ -477,7 +515,7 @@ bool TexConverter::update(FTextureInfo &Info, DWORD PolyFlags) const {
 		return true;
 	}
 
-	const TextureFormat &format = formats[Info.Format];
+	const TextureFormat &format = getFormat(Info.Format);
 	if (format.supported == false) {
 		conversionFailed(Info, "Unknown texture type.");
 		return true;

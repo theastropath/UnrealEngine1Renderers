@@ -639,7 +639,7 @@ class UD3D9RenderDevice : public URenderDevice {
 	the timing math away within days of uptime and the frame limiter starts stalling or
 	overshooting.
 	*/
-#if defined UTGLR_DX_BUILD || defined UTGLR_RUNE_BUILD || defined UTGLR_OLD_URENDERDEVICE || defined UTGLR_UNREAL_227_BUILD
+#if defined UTGLR_DX_BUILD || defined UTGLR_RUNE_BUILD || defined UTGLR_OLD_URENDERDEVICE
 	DOUBLE m_prevFrameTimestamp;
 #else
 	FTime m_prevFrameTimestamp;
@@ -1454,7 +1454,11 @@ class UD3D9RenderDevice : public URenderDevice {
 	void PushHit(const BYTE *Data, INT Count);
 	void PopHit(INT Count, UBOOL bForce);
 	void GetStats(TCHAR *Result);
-	void ReadPixels(FColor *Pixels);
+	void ReadPixels(FColor *Pixels
+#if UTGLR_UNREAL_227_BUILD
+		, UBOOL bGammaCorrectOutput
+#endif
+	);
 	void EndFlash();
 	void PrecacheTexture(FTextureInfo &Info, DWORD PolyFlags);
 

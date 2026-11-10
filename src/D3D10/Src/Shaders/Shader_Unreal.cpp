@@ -6,7 +6,6 @@ Base class for the Unreal geometry pipeline shaders. They share a pool and a geo
 #include <new>
 #include "Shader_Unreal.h"
 #include "../Geometry/DynamicGeometryBuffer.h"
-#include <xnamath.h>
 
 DynamicGeometryBuffer *Shader_Unreal::dynamicGeometryBuffer;
 ID3D10EffectPool *Shader_Unreal::pool;
@@ -276,8 +275,16 @@ void Shader_Unreal::setProjection(float prjXM, float prjXP, float prjYM, float p
 	D3D::render();
 
 	//The vertex shaders flip Y.
-	XMMATRIX m = XMMatrixPerspectiveOffCenterLH(-prjXM * zFar, prjXP * zFar, -prjYM * zFar, prjYP * zFar, zFar, zNear); //Same as a standard off-center frustum.
-	variables.projection->SetMatrix(&m.m[0][0]);
+	//XMMatrixPerspectiveOffCenterLH(-prjXM * zFar, prjXP * zFar, -prjYM * zFar, prjYP * zFar, zFar, zNear)
+	//expanded to its 4x4 result. Need to recheck math: https://learn.microsoft.com/en-us/windows/win32/api/directxmath/nf-directxmath-xmmatrixperspectiveoffcenterlh
+	const float l = -prjXM * zFar, r = prjXP * zFar, b = -prjYM * zFar, t = prjYP * zFar, n = zFar, f = zNear;
+	float m[4][4] = {
+		{2 * n / (r - l), 0, 0, 0},
+		{0, 2 * n / (t - b), 0, 0},
+		{(l + r) / (l - r), (t + b) / (b - t), f / (f - n), 1},
+		{0, 0, n * f / (n - f), 0}
+	};
+	variables.projection->SetMatrix(&m[0][0]);
 
 	oldPrjXM = prjXM;
 	oldPrjXP = prjXP;

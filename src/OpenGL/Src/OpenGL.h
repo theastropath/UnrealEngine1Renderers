@@ -484,7 +484,7 @@ class UOpenGLRenderDevice : public URenderDevice {
 	INT FrameRateLimit;
 	//DOUBLE where it is needed.
 	//Some SDKs hand back an absolute 64-bit cycle count.
-#if defined UTGLR_DX_BUILD || defined UTGLR_RUNE_BUILD || defined UTGLR_OLD_URENDERDEVICE || defined UTGLR_UNREAL_227_BUILD
+#if defined UTGLR_DX_BUILD || defined UTGLR_RUNE_BUILD || defined UTGLR_OLD_URENDERDEVICE
 	DOUBLE m_prevFrameTimestamp;
 #else
 	FTime m_prevFrameTimestamp;
@@ -1306,7 +1306,11 @@ class UOpenGLRenderDevice : public URenderDevice {
 	void PushHit(const BYTE *Data, INT Count);
 	void PopHit(INT Count, UBOOL bForce);
 	void GetStats(TCHAR *Result);
-	void ReadPixels(FColor *Pixels);
+	void ReadPixels(FColor *Pixels
+#if UTGLR_UNREAL_227_BUILD
+		, UBOOL bGammaCorrectOutput
+#endif
+	);
 	void EndFlash();
 	void PrecacheTexture(FTextureInfo &Info, DWORD PolyFlags);
 
@@ -1516,7 +1520,7 @@ class UOpenGLRenderDevice : public URenderDevice {
 
 #ifdef UTGLR_RUNE_BUILD
 		DWORD blendFlags = PolyFlags & (PF_Translucent | PF_Modulated | PF_Invisible | PF_Occlude | PF_Masked | PF_Highlighted | PF_AlphaBlend);
-#elif defined(UTGLR_UNREAL_227_BUILD)
+#elif defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 		DWORD blendFlags = PolyFlags & (PF_Translucent | PF_Modulated | PF_Invisible | PF_Occlude | PF_Masked | PF_Highlighted | PF_AlphaBlend);
 #else
 		DWORD blendFlags = PolyFlags & (PF_Translucent | PF_Modulated | PF_Invisible | PF_Occlude | PF_Masked | PF_Highlighted);

@@ -176,3 +176,25 @@ jobs:
           name: Klingon.zip
           path: dist/Klingon.zip
           archive: false
+
+      - name: Build Unreal 227
+        run: .venv/bin/python src/BuildRelease.py Unreal_227
+        shell: bash
+
+      - name: Upload Unreal_227.zip
+        uses: actions/upload-artifact@v7
+        with:
+          name: Unreal_227.zip
+          path: dist/Unreal_227.zip
+          archive: false
+          
+      - name: Build Unreal Tournament 469
+        run: .venv/bin/python src/BuildRelease.py UnrealTournament_469
+        shell: bash
+
+      - name: Upload UnrealTournament_469.zip
+        uses: actions/upload-artifact@v7
+        with:
+          name: UnrealTournament_469.zip
+          path: dist/UnrealTournament_469.zip
+          archive: false

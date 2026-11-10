@@ -138,6 +138,11 @@ rem They go on COMMON and are not left to the /external:W0 below: C4430 is an er
 rem and /external:W0 does not reach it.
 if defined GAMEWARNINGS set COMMON=%COMMON% %GAMEWARNINGS%
 
+rem Unreal 227's Core defines UNICHAR as wchar_t and adds an FArchive operator<<(TCHAR)
+rem that collides with operator<<(_WORD) when /Zc:wchar_t- makes wchar_t a typedef for
+rem unsigned short. Build with wchar_t as a distinct type so TCHAR != _WORD.
+if /i "%GAME%"=="Unreal_227" set "COMMON=%COMMON:/Zc:wchar_t-=% /Zc:wchar_t"
+
 rem ..\Shared goes in as a plain /I, not /external:I: it holds this project's own code -
 rem the build-flag ladder, the red-black tree, the selection clipper, and the job system and
 rem frame arena the siblings use - and /W4 should apply to it as it does to Src.

@@ -97,7 +97,7 @@ void UOpenGLRenderDevice::DrawTile(FSceneNode *Frame, FTextureInfo &Info, FLOAT 
 			DWORD blendPolyFlags = PolyFlags;
 #ifdef UTGLR_RUNE_BUILD
 			if (Info.Palette && Info.Palette[128].A != 255 && !(PolyFlags & (PF_Translucent | PF_AlphaBlend))) {
-#elif defined(UTGLR_UNREAL_227_BUILD)
+#elif defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 			if (Info.Palette && Info.Palette[128].A != 255 && !(PolyFlags & (PF_Translucent | PF_AlphaBlend))) {
 #else
 			if (Info.Palette && Info.Palette[128].A != 255 && !(PolyFlags & PF_Translucent)) {
@@ -197,7 +197,7 @@ void UOpenGLRenderDevice::DrawTile(FSceneNode *Frame, FTextureInfo &Info, FLOAT 
 				if (PolyFlags & PF_AlphaBlend) {
 					fAlpha = _mm_mul_ss(fAlpha, _mm_load_ss(&Info.Texture->Alpha));
 				}
-#elif defined(UTGLR_UNREAL_227_BUILD)
+#elif defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 				if (PolyFlags & PF_AlphaBlend) {
 					fAlpha = _mm_mul_ss(fAlpha, _mm_load_ss(&Color.W));
 				}
@@ -224,7 +224,7 @@ void UOpenGLRenderDevice::DrawTile(FSceneNode *Frame, FTextureInfo &Info, FLOAT 
 				} else {
 					dwColor = FPlaneTo_RGBClamped_A255(&Color);
 				}
-#elif defined(UTGLR_UNREAL_227_BUILD)
+#elif defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 				if (PolyFlags & PF_AlphaBlend) {
 					dwColor = FPlaneTo_RGBAClamped(&Color);
 				} else {
@@ -262,7 +262,7 @@ void UOpenGLRenderDevice::DrawTile(FSceneNode *Frame, FTextureInfo &Info, FLOAT 
 		DWORD blendPolyFlags = PolyFlags;
 #ifdef UTGLR_RUNE_BUILD
 		if (Info.Palette && Info.Palette[128].A != 255 && !(PolyFlags & (PF_Translucent | PF_AlphaBlend))) {
-#elif defined(UTGLR_UNREAL_227_BUILD)
+#elif defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 		if (Info.Palette && Info.Palette[128].A != 255 && !(PolyFlags & (PF_Translucent | PF_AlphaBlend))) {
 #else
 		if (Info.Palette && Info.Palette[128].A != 255 && !(PolyFlags & PF_Translucent)) {
@@ -289,7 +289,7 @@ void UOpenGLRenderDevice::DrawTile(FSceneNode *Frame, FTextureInfo &Info, FLOAT 
 				Color.W = Info.Texture->Alpha;
 			}
 			SetColor4fv(&Color.X);
-#elif defined(UTGLR_UNREAL_227_BUILD)
+#elif defined(UTGLR_UNREAL_227_BUILD) || defined(UTGLR_UT_469_BUILD)
 			if (PolyFlags & PF_AlphaBlend) {
 				SetColor4fv(&Color.X);
 			} else {

@@ -17,6 +17,12 @@ PF_NoSmooth drops filtering for UI.
 
 #include "polyflags.fxh"
 
+/**
+The bit the HLSL shaders test for alpha blending. Rune and the shaders agree on
+0x1000. Unreal 227 sets it as 0x20000.
+*/
+static const DWORD SHADER_PF_ALPHABLEND = 0x00001000;
+
 
 
 /**
@@ -24,11 +30,17 @@ Filter engine polyflags down to the ones this renderer may act
 on.
 
 0x1000 is PF_AlphaBlend in Rune and PF_BigWavy elsewhere, so honouring it
-everywhere would alpha blend every wavy surface.
+everywhere would alpha blend every wavy surface. OldUnreal moves PF_AlphaBlend
+to 0x20000 (PF_CloudWavy's slot in older engines); the shader still tests 0x1000,
+so the flag is translated down and PF_BigWavy stripped.
 */
 static inline DWORD enginePolyFlags(DWORD polyFlags) {
-//#if not #ifndef; /D NAME defines it as 1.
-#if !RUNE
+#if (UNREAL_227 || UNREALTOURNAMENT_469)
+	const DWORD shaderAlphaBlend = (polyFlags & PF_AlphaBlend) ? 0x00001000u : 0;
+	polyFlags &= ~PF_AlphaBlend;
+	polyFlags &= ~0x00001000u; //PF_BigWavy, which shares the shader's bit.
+	polyFlags |= shaderAlphaBlend;
+#elif !RUNE
 	//Non-Rune headers don't declare it.
 	const DWORD PF_AlphaBlend_Bit = 0x00001000;
 	polyFlags &= ~PF_AlphaBlend_Bit;

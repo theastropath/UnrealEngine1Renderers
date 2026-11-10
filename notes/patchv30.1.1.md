@@ -1,7 +1,6 @@
 Add your patchnotes for release v30.1.1 here
 
 ## Major Changes
- - Nothing
 
 ## Minor Changes
 

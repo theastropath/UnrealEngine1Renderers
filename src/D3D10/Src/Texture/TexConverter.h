@@ -16,7 +16,8 @@ private:
 		DXGI_FORMAT d3dFormat;
 		void (*conversionFunc)(const FTextureInfo &, DWORD, void *, int);
 	};
-	static TexConverter::TextureFormat formats[];
+
+	static const TextureFormat &getFormat(BYTE format);
 
 	/**@name Format conversion functions */
 	//@{
