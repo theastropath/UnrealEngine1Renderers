@@ -45,7 +45,7 @@ This page should explain all of the settings available in the renderers.
 | MultiDrawArrays | ❌ | ❌ | ✅ | Enables the use of the GL_EXT_multi_draw_arrays extension. |
 | MultiTexture | ✅ | ❌ | ✅ | Controls the use of multitexturing.  Should always be enabled, as there may be glitches when disabled. |
 | NoAATiles | ✅ | ❌ | ✅ | Enable this option to disable antialiasing when drawing tiles as seen from the lower half renderer perspective. This should eliminate HUD corruption that can occur when antialiasing is enabled. Some video hardware / drivers do not support the functionality required to enable this option. Note that corruption with antialiasing enabled can still occur on the logo background if using Entry.unr on startup (it's not made of tiles from the renderer perspective). |
-| NoFiltering | ✅ | ❌ | ✅ | Disables filtering on all textures. |
+| NoFiltering | ✅ | ❌ | ✅ | Disables filtering on all textures.  Please note that disabling filtering will also cause shadows to be unfiltered, which will make them look blocky on surfaces. |
 | OneXBlending | ✅ | ✅ | ✅ | If enabled, matches what the D3D renderer does for blending in multitexture mode when applying lightmaps to world geometry. I can't say for sure which way is correct. In single texture mode, the D3D renderer does appear to do blending like the OpenGL renderer in single texture mode or multitexture mode without OneXBlending enabled. |
 | Palette | ❌ | ❌ | ✅ | Controls the use of paletted textures. If there is hardware support for paletted textures, using them can significantly improve performance. |
 | ParallaxOcclusionMapping | ❌ | ✅ | ❌ | Gives surfaces 3D relief. Pretty GPU intensive, and you might not like the way it looks. Will use an external height map texture if present, otherwise the detail texture is used. Valid settings: true/false. Default: false. |
@@ -67,7 +67,7 @@ This page should explain all of the settings available in the renderers.
 | TexIdPool | ✅ | ❌ | ✅ | Should be set to True. |
 | TexPool | ✅ | ❌ | ✅ | Should be set to True. |
 | TextureCacheBudgetMegs | ✅ | ✅ | ✅ | In MB, the threshold of memory that can be actively used before reporting a warning about memory usage.  Disabled when set to 0. |
-| TextureFiltering | ❌ | ✅ | ❌ | Set to 0 gives point filtering, 1 gives linear filtering, 2 gives anisotropic filtering |
+| TextureFiltering | ❌ | ✅ | ❌ | Set to 0 gives point filtering, 1 gives linear filtering, 2 gives anisotropic filtering.  Please note that using point filtering will also cause shadows to be unfiltered, which will make them look blocky on surfaces. |
 | TextureOverrides | ✅ | ✅ | ✅ | Enable loading of loose .dds textures from the ./Textures folder. D3D10 supports the full DDS format, while D3D9 and OpenGL 1.x lack bump mapping and height. |
 | Trilinear | ✅ | ❌ | ✅ | Enables trilinear texture filtering |
 | TripleBuffering | ✅ | ❌ | ❌ | Enables triple buffering. |
